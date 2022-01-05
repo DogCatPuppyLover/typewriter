@@ -1,0 +1,62 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<style id="style">
+	</style>
+	<link rel="shortcut icon" type="image/png" href="assets/images/favicon.png" />
+	<title>Preferences - Typewriter</title>
+</head>
+
+<body>
+	<noscript>
+		<a href="https://www.enable-javascript.com/" class="red-link" target="_blank">
+			<div id="noscript">
+				Your browser does not have JavaScript enabled! This site needs to use JavaScript in order to save your preferences. Click
+				here to learn how to enable JavaScript in your browser.
+			</div>
+		</a>
+		<br>
+</noscript>
+
+<h1>Preferences</h1>
+<input type="checkbox" id="typewriterSounds"> Play typewriter sound effects
+<br>
+<input type="checkbox" id="hideMouse" checked> Hide mouse when you start typing
+<br>
+<input type="checkbox" id="spellcheck" checked> Underline misspelled words in the editor
+<h2>Set custom CSS</h2>
+<textarea id="userStyles"></textarea>
+<h3>Sample CSS snippets</h3>
+<h4>Use the OpenDyslexic font</h4>
+<textarea readonly>body {font-family: "OpenDyslexic" !important;}</textarea>
+<div>
+  <button id="save-button">Save preferences</button>
+</div>
+<p>
+  You may need to reload the page for the preferences to apply.
+</p>
+
+</body>
+
+<script src="preferences.js"></script>
+
+<script>
+  loadCheckbox("typewriterSounds");
+  loadCheckbox("hideMouse");
+  loadCheckbox("spellcheck");
+  loadTextarea("userStyles");
+
+  var savePreferences = function () {
+    updateCheckbox("typewriterSounds");
+    updateCheckbox("hideMouse");
+    updateCheckbox("spellcheck");
+    updateTextarea("userStyles");
+  }
+
+  document.getElementById("save-button").onclick = savePreferences;
+</script>
+
+</html>
