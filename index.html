@@ -12,37 +12,37 @@ To-do:
 
 <head>
 	<meta charset="utf-8">
-	
-        <script>
-        /*    
-        @licstart  The following is the entire license notice for the 
-        JavaScript code in this page.
 
-        Copyright (C) 2014  Loic J. Duros
+	<script>
+	/*    
+	@licstart  The following is the entire license notice for the 
+	JavaScript code in this page.
 
-        The JavaScript code in this page is free software: you can
-        redistribute it and/or modify it under the terms of the GNU
-        General Public License (GNU GPL) as published by the Free Software
-        Foundation, either version 3 of the License, or (at your option)
-        any later version.  The code is distributed WITHOUT ANY WARRANTY;
-        without even the implied warranty of MERCHANTABILITY or FITNESS
-        FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+	Copyright (C) 2014  Loic J. Duros
 
-        As additional permission under GNU GPL version 3 section 7, you
-        may distribute non-source (e.g., minimized or compacted) forms of
-        that code without the copy of the GNU GPL normally required by
-        section 4, provided you include this license notice and a URL
-        through which recipients can access the Corresponding Source.   
+	The JavaScript code in this page is free software: you can
+	redistribute it and/or modify it under the terms of the GNU
+	General Public License (GNU GPL) as published by the Free Software
+	Foundation, either version 3 of the License, or (at your option)
+	any later version.  The code is distributed WITHOUT ANY WARRANTY;
+	without even the implied warranty of MERCHANTABILITY or FITNESS
+	FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+	As additional permission under GNU GPL version 3 section 7, you
+	may distribute non-source (e.g., minimized or compacted) forms of
+	that code without the copy of the GNU GPL normally required by
+	section 4, provided you include this license notice and a URL
+	through which recipients can access the Corresponding Source.   
 
 
-        @licend  The above is the entire license notice
-        for the JavaScript code in this page.
-        */
-        </script>
-	
-  <link rel="stylesheet" href="https://indestructibletype.com/fonts/Bodoni/Bodoni.css" type="text/css" charset="utf-8" />
-  <link rel="stylesheet" type="text/css" href="styles.css" />
-  <link rel="stylesheet" type="text/css" href="fonts.css" />
+	@licend  The above is the entire license notice
+	for the JavaScript code in this page.
+	*/
+	</script>
+
+	<link rel="stylesheet" href="https://indestructibletype.com/fonts/Bodoni/Bodoni.css" type="text/css" charset="utf-8" />
+	<link rel="stylesheet" type="text/css" href="styles.css" />
+	<link rel="stylesheet" type="text/css" href="fonts.css" />
 	<link rel="shortcut icon" type="image/png" href="assets/images/favicon.png" />
 	<title>Typewriter</title>
 </head>
@@ -51,19 +51,20 @@ To-do:
 	<input id="fileItem" type="file" onchange="openFile()" hidden/>
 	<noscript>
 		<p> Your browser does not have JavaScript enabled! This site needs to use JavaScript to auto-save your text, play typewriter sound effects, and apply formatting. You can use Typewriter without JavaScript, but many features will not work. Click <a href="https://www.enable-javascript.com/" class="red-link" target="_blank">here</a> to learn how to enable JavaScript in your browser.</p>
-  	</noscript>
+	</noscript>
 
-  <div id="toolbox" class="hide-scrollbars">
-      <a href="preferences.html" class="preferences" target="_blank">⚙️</a>
-      <span id="tabs"></span>
-      <button onclick="newTab()" class="newfile" name="Open a new file">+</button>
-  </div>
+	<div id="toolbox" class="hide-scrollbars">
+		<a href="preferences.html" class="preferences" target="_blank">⚙️</a>
+		<span id="tabs"></span>
+		<button onclick="newTab()" class="newfile" name="Open a new file">+</button>
+	</div>
 
-  <div contenteditable="true" id="editor" spellcheck="true">
-    <h1>Welcome to Typewriter!</h1><div>Typewriter is a simple, Web-based text editor. It autosaves your work to your computer, so you can just write. It doesn't send your work to any other servers.</div><h2>Some formatting options:</h2><ul><li>Make headings with ctrl + 1, ctrl + 2, ctrl + 3, and ctrl + 4, or remove a heading with ctrl + 0<li>Make text <b>bold</b> with ctrl + b<li>Make text <i>italic</i> with ctrl + i<li><u>Underline</u> text with ctrl + u<li><span style=background-color:#ff0>Highlight</span> text with ctrl + alt + h<li>Add <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">links</a> with ctrl + k (links only work if you download the document as an HTML file)<li><strike>Strike-through</strike> text with ctrl + alt + -<li>Add subscripts and superscripts with ctrl + shift + = and ctrl + shift + -<li>Create an unordered list with ctrl + shift + l<li>Create a ordered list with ctrl + alt + l<li>Insert a horizontal line with ctrl + alt + r<li>Insert an image with ctrl + alt + i<li>Indent text with tab<li>Outdent text with shift + tab<li>Remove formatting with ctrl + \</ul><h2>Other functionality:</h2><ul><li>Download your work as a text or HTML file with ctrl + s<li>Open a file with ctrl + o<li>Print your work with ctrl + p</ul><div>The preferences page can be accessed by hovering over the top-left corner and clicking the gear icon that shows up. There, you can toggle typewriter sound effects and use custom CSS.</div><div>Typewriter is free and open-source, liscened under GPL 3.0! You can view the source code here: <a href="https://github.com/DogCatPuppyLover/typewriter">https://github.com/DogCatPuppyLover/typewriter</a></div>
-  </div>
-</body>
-
+	<div contenteditable="true" id="editor" spellcheck="true">
+		<h1>Welcome to Typewriter!</h1><div>Typewriter is a simple, Web-based text editor. It autosaves your work to your computer, so you can just write. It doesn't send your work to any other servers.</div><h2>Some formatting options:</h2><ul><li>Make headings with ctrl + 1, ctrl + 2, ctrl + 3, and ctrl + 4, or remove a heading with ctrl + 0<li>Make text <b>bold</b> with ctrl + b<li>Make text <i>italic</i> with ctrl + i<li><u>Underline</u> text with ctrl + u<li><span style=background-color:#ff0>Highlight</span> text with ctrl + alt + h<li>Add <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">links</a> with ctrl + k (links only work if you download the document as an HTML file)<li><strike>Strike-through</strike> text with ctrl + alt + -<li>Add subscripts and superscripts with ctrl + shift + = and ctrl + shift + -<li>Create an unordered list with ctrl + shift + l<li>Create a ordered list with ctrl + alt + l<li>Insert a horizontal line with ctrl + alt + r<li>Insert an image with ctrl + alt + i<li>Indent text with tab<li>Outdent text with shift + tab<li>Remove formatting with ctrl + \</ul><h2>Other functionality:</h2><ul><li>Download your work as a text or HTML file with ctrl + s<li>Open a file with ctrl + o<li>Print your work with ctrl + p</ul><div>The preferences page can be accessed by hovering over the top-left corner and clicking the gear icon that shows up. There, you can toggle typewriter sound effects and use custom CSS.</div><div>Typewriter is free and open-source, liscened under GPL 3.0! You can view the source code here: <a href="https://github.com/DogCatPuppyLover/typewriter">https://github.com/DogCatPuppyLover/typewriter</a></div>
+	</div>
+	
 <script src="scripts.js"></script>
+
+</body>
 
 </html>
