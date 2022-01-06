@@ -201,8 +201,7 @@ a {
   outline: none;
 }
 
-.newfile {
-  font-size: 20px;
+#newfile {
   border: none;
   outline: none;
   background: none;
