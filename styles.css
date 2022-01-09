@@ -1,33 +1,8 @@
-/* https://indestructibletype.com/Bodoni.html */
-
-/* COMMON THINGS */
+/* Bodoni font: https://indestructibletype.com/Bodoni.html */
 
 html {
-  /* Font size */
   font-size: 112.5%; /* 112.5% = 18px */
 }
-
-body {
-  /* Background color */
-  background-color: #ffffff;
-
-  /* Text color */
-  color: black;
-
-  /* Font */
-  font-family: Georgia, serif;
-
-  /* Line height */
-  line-height: 1.5;
-
-  /* Caret color */
-  caret-color: black;
-  
-  /* Opening animation */
-  animation: 1s ease-in 0s 1 fadeIn;
-}
-
-/* --------------- */
 
 @keyframes fadeIn {
   0% {
@@ -48,6 +23,12 @@ body {
 }
 
 body {
+  background-color: #ffffff;
+  color: black;
+  font-family: Georgia, serif;
+  line-height: 1.5;
+  caret-color: black;
+  animation: 1s ease-in 0s 1 fadeIn;
   word-wrap: break-word;
   hyphens: auto;
   font-size: 1rem;
