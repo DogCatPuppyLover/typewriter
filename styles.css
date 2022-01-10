@@ -158,15 +158,8 @@ a {
   opacity: 1;
 }
 
-.preferences {
-  font-size: 20px;
-  text-decoration: none;
-  color: #ffffff !important;
-}
-
 .tabs {
   display: inline-block;
-  width: 0;
   height: 100%;
   overflow: auto;
 }
@@ -181,8 +174,12 @@ a {
   border: none;
   cursor: pointer;
   margin: 5px 5px 0 5px;
-  background-color: #ffffff;
+  background-color: transparent;
   outline: none;
+}
+
+.active-tab {
+  background-color: #ffffff;
 }
 
 #newfile {
