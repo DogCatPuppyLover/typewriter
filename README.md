@@ -1,8 +1,8 @@
 # Typewriter
 
-Typewr!ter is a simple, FOSS, Web-based text editor that aims to provide a simple and intuitive environment for you to write in.
+Typewriter is a simple, FOSS, Web-based text editor that aims to provide a simple and intuitive environment for you to write in.
 
-##Features
+## Features
 
 - Simple and intuitive layout
 - Formatting with keyboard shortcuts
