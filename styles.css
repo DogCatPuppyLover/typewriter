@@ -23,7 +23,7 @@ html {
 }
 
 body {
-  background-color: #ffffff;
+  background-color: #fafafa;
   color: black;
   font-family: Georgia, serif;
   line-height: 1.5;
@@ -70,6 +70,10 @@ body {
 }
 
 @media print {
+  body {
+    background-color: #ffffff;
+  }
+  
   #editor {
     padding: 0;
   }
