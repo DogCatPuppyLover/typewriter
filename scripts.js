@@ -60,6 +60,43 @@ if (localStorage.getItem("userStyles") !== null) {
   document.head.appendChild(styleSheet);
 }
 
+if (localStorage.getItem("focusMode") == "true") {
+  // https://stackoverflow.com/a/29979356
+  let selectionContainer = null;
+
+  function updateSelectionContainer() {
+    let newSelectionContainer = null;
+    let sel;
+    if (window.getSelection && (sel = window.getSelection()).rangeCount) {
+      newSelectionContainer = sel.getRangeAt(0).commonAncestorContainer;
+
+      // Ensure we have an element rather than a text node
+      if (newSelectionContainer.nodeType != 1) {
+        newSelectionContainer = newSelectionContainer.parentNode;
+      }
+    }
+    if (newSelectionContainer != selectionContainer) {
+      if (selectionContainer) {
+        selectionContainer.className = selectionContainer.className.replace(/ ?containsSelection/, "");
+      }
+      if (newSelectionContainer) {
+        newSelectionContainer.className +=
+          (newSelectionContainer.className ? " containsSelection" : "containsSelection");
+      }
+      selectionContainer = newSelectionContainer;
+    }
+  }
+
+  if ("onselectionchange" in document) {
+    document.onselectionchange = updateSelectionContainer;
+  } else {
+    var el = document.getElementById("editor");
+    el.onmousedown = el.onmouseup = el.onkeydown = el.onkeyup = el.oninput = updateSelectionContainer;
+    window.setInterval(updateSelectionContainer, 100);
+  }
+
+}
+
 var saveFile = function (filename, data, type) {
   var blob = new Blob([data], { type: type });
   if (window.navigator.msSaveOrOpenBlob) {
