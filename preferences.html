@@ -27,36 +27,38 @@
 <input type="checkbox" id="hideMouse" checked> Hide mouse when you start typing
 <br>
 <input type="checkbox" id="spellcheck" checked> Underline misspelled words in the editor
+<br>
+<input type="checkbox" id="focusMode" checked> Highlight the current paragraph
 <h2>Set custom CSS</h2>
 <textarea id="userStyles"></textarea>
 <h3>Sample CSS snippets</h3>
 <h4>Use the OpenDyslexic font</h4>
 <textarea readonly>body {font-family: "OpenDyslexic" !important;}</textarea>
 <div>
-  <button id="save-button">Save preferences</button>
+	<button id="save-button">Save preferences</button>
 </div>
-<p>
-  You may need to reload the page for the preferences to apply.
-</p>
+<p>You may need to reload the page for the preferences to apply.</p>
 
 </body>
 
 <script src="preferences.js"></script>
 
 <script>
-  loadCheckbox("typewriterSounds");
-  loadCheckbox("hideMouse");
-  loadCheckbox("spellcheck");
-  loadTextarea("userStyles");
+	loadCheckbox("typewriterSounds");
+	loadCheckbox("hideMouse");
+	loadCheckbox("spellcheck");
+	loadCheckbox("focusMode");
+	loadTextarea("userStyles");
 
-  var savePreferences = function () {
-    updateCheckbox("typewriterSounds");
-    updateCheckbox("hideMouse");
-    updateCheckbox("spellcheck");
-    updateTextarea("userStyles");
-  }
+	var savePreferences = function () {
+		updateCheckbox("typewriterSounds");
+		updateCheckbox("hideMouse");
+		updateCheckbox("spellcheck");
+		updateCheckbox("focusMode");
+		updateTextarea("userStyles");
+	}
 
-  document.getElementById("save-button").onclick = savePreferences;
+	document.getElementById("save-button").onclick = savePreferences;
 </script>
 
 </html>
