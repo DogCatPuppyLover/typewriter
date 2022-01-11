@@ -34,7 +34,7 @@ var addToolboxTab = function (i) {
 var appendStyles = function (styles) {
   let styleSheet = document.createElement("style");
   styleSheet.type = "text/css";
-  styleSheet.innerHTML = localStorage.getItem(styles);
+  styleSheet.innerHTML = styles;
   document.head.appendChild(styleSheet);
 }
 
