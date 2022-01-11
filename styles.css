@@ -53,7 +53,6 @@ body {
 #editor {
   padding: 50px 20% 50px 20%;
   text-align: left;
-  color: rgba(0, 0, 0, 0.5);
 }
 
 @media screen and (max-width: 992px) {
@@ -84,8 +83,8 @@ body {
   margin: 10px;
 }
 
-#editor div:active {
-  color: rgba(0, 0, 0, 1);
+editor > :not(:hover) {
+    opacit: 0.5;
 }
 
 /* p+p {
@@ -213,5 +212,5 @@ a {
 
 [contenteditable=true]:empty::before {
   content: attr(placeholder);
-  color: rgba(0, 0, 0, 0.5);
+  color: opacity: 0.5;
 }
