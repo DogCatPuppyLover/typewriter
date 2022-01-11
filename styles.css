@@ -80,18 +80,30 @@ body {
 }
 
 #editor div {
-  margin: 10px;
+  margin-bottom: 10px;
 }
 
-editor > :not(:hover) {
-    opacit: 0.5;
+/* https://stackoverflow.com/a/29979356 */
+
+#editor > :not(.editableFocus) { /* :not selector doesn't work in IE =< 8: https://stackoverflow.com/a/2489736 */
+    opacity: 0.5;
 }
 
-/* p+p {
+/*
+
+Stylistic - make optional (default off)
+
+#editor > :not(h1,h2,h3,h4,h5,h6):nth-of-type(1)::first-letter {
+  font-size: 200%;
+  margin: 5px;
+}
+
+p+p {
   text-indent: 1rem;
   margin-top: 0;
-} */
+}
 
+*/
 
 h1 {
   font-size: 3rem;
@@ -196,8 +208,6 @@ a {
   background: none;
   cursor: pointer;
 }
-
-/* */
 
 .hide-scrollbars {
   -ms-overflow-style: none !important; /* Hide scrollbars Edge */
