@@ -77,11 +77,11 @@ if (localStorage.getItem("focusMode") == "true") {
     }
     if (newSelectionContainer != selectionContainer) {
       if (selectionContainer) {
-        selectionContainer.className = selectionContainer.className.replace(/ ?containsSelection/, "");
+        selectionContainer.className = selectionContainer.className.replace(/ ?editableFocus/, "");
       }
       if (newSelectionContainer) {
         newSelectionContainer.className +=
-          (newSelectionContainer.className ? " containsSelection" : "containsSelection");
+          (newSelectionContainer.className ? " editableFocus" : "editableFocus");
       }
       selectionContainer = newSelectionContainer;
     }
