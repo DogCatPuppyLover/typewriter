@@ -53,6 +53,7 @@ body {
 #editor {
   padding: 50px 20% 50px 20%;
   text-align: left;
+  opacity: 0;
 }
 
 @media screen and (max-width: 992px) {
@@ -79,12 +80,11 @@ body {
   }
 }
 
-editor div {
+#editor div {
   margin: 10px;
-  opacity: 0.5;
 }
 
-editor div:active {
+#editor div:active {
   opacity: 1;
 }
 
