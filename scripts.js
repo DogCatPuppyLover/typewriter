@@ -31,6 +31,13 @@ var addToolboxTab = function (i) {
   document.getElementById("tabs").appendChild(tab);
 }
 
+var appendStyles = function (styles) {
+  let styleSheet = document.createElement("style");
+  styleSheet.type = "text/css";
+  styleSheet.innerHTML = localStorage.getItem(styles);
+  document.head.appendChild(styleSheet);
+}
+
 if (localStorage.getItem("file0") !== null) {
   editor.innerHTML = localStorage.getItem("file0");
   i = 0;
@@ -53,17 +60,15 @@ if (localStorage.getItem("spellcheck") !== null) {
 }
 
 if (localStorage.getItem("userStyles") !== null) {
-  //https://stackoverflow.com/a/6211716
-  var styleSheet = document.createElement("style");
-  styleSheet.type = "text/css";
-  styleSheet.innerHTML = localStorage.getItem("userStyles");
-  document.head.appendChild(styleSheet);
+  // https://stackoverflow.com/a/707580
+  appendStyles(localStorage.getItem("userStyles"));
 }
 
 if (localStorage.getItem("focusMode") == "true") {
+  appendStyles("#editor>:not(.editableFocus){opacity: 0.5;}");
+
   // https://stackoverflow.com/a/29979356
   let selectionContainer = null;
-
   function updateSelectionContainer() {
     let newSelectionContainer = null;
     let sel;
