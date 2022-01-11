@@ -81,6 +81,11 @@ body {
 
 editor div {
   margin: 10px;
+  opacity: 0.5;
+}
+
+editor div:active {
+  opacity: 1;
 }
 
 /* p+p {
@@ -145,8 +150,6 @@ a {
 
 #toolbox {
   position: fixed; /* Fixed toolbox */
-  display: flex;
-  justify-content: center; /* Center contents */
   width: 100%;
   height: 30px;
   padding: 5px;
