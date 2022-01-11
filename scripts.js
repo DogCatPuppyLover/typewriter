@@ -94,7 +94,6 @@ if (localStorage.getItem("focusMode") == "true") {
     el.onmousedown = el.onmouseup = el.onkeydown = el.onkeyup = el.oninput = updateSelectionContainer;
     window.setInterval(updateSelectionContainer, 100);
   }
-
 }
 
 var saveFile = function (filename, data, type) {
