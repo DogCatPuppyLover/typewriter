@@ -73,7 +73,7 @@ body {
   body {
     background-color: #ffffff;
   }
-  
+
   #editor {
     padding: 0;
   }
@@ -81,12 +81,6 @@ body {
 
 #editor div {
   margin-bottom: 10px;
-}
-
-/* https://stackoverflow.com/a/29979356 */
-
-#editor > :not(.editableFocus) { /* :not selector doesn't work in IE =< 8: https://stackoverflow.com/a/2489736 */
-    opacity: 0.5;
 }
 
 /*
