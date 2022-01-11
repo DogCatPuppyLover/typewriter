@@ -205,3 +205,10 @@ a {
 .hide-scrollbars::-webkit-scrollbar { /* Hide scrollbars Webkit */
   display: none !important;
 }
+
+/* https://coderwall.com/p/n55a0g/fixing-contenteditable-placeholders-with-3-lines-of-css */
+
+[contenteditable=true]:empty::before {
+  content: attr(placeholder);
+  opacity: 0.5;
+}
