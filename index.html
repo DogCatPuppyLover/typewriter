@@ -4,9 +4,11 @@ TYPEWRITER - a simple Web-based text editor
 To-do:
 - Add support for source editing 0%
 - Close, name, and reorder tabs 0%
+- Prevent focus mode attribute from being saved 50%
+- Fix toolbar hover over un-focused text 0%
 -->
 
-<!doctype html>
+<!DOCTYPE html>
 
 <html>
 
@@ -14,11 +16,11 @@ To-do:
 	<meta charset="utf-8">
 
 	<script>
-	/*    
-	@licstart  The following is the entire license notice for the 
+	/*
+	@licstart  The following is the entire license notice for the
 	JavaScript code in this page.
 
-	Copyright (C) 2014  Loic J. Duros
+	Copyright (C) 2022  DogCatPuppyLover
 
 	The JavaScript code in this page is free software: you can
 	redistribute it and/or modify it under the terms of the GNU
@@ -32,7 +34,7 @@ To-do:
 	may distribute non-source (e.g., minimized or compacted) forms of
 	that code without the copy of the GNU GPL normally required by
 	section 4, provided you include this license notice and a URL
-	through which recipients can access the Corresponding Source.   
+	through which recipients can access the Corresponding Source.
 
 
 	@licend  The above is the entire license notice
@@ -43,6 +45,7 @@ To-do:
 	<link rel="stylesheet" href="https://indestructibletype.com/fonts/Bodoni/Bodoni.css" type="text/css" charset="utf-8" />
 	<link rel="stylesheet" type="text/css" href="styles.css" />
 	<link rel="stylesheet" type="text/css" href="fonts.css" />
+	<script src="https://unpkg.com/turndown/dist/turndown.js"></script>
 	<link rel="shortcut icon" type="image/png" href="assets/images/favicon.png" />
 	<title>Typewriter</title>
 </head>
@@ -59,10 +62,10 @@ To-do:
 		<button onclick="newTab()" id="newfile" name="Open a new file"><img src="assets/images/bootstrap/plus-lg.svg" alt="New file"></button>
 	</div>
 
-	<div contenteditable="true" id="editor" spellcheck="true" placeholder="It was a dark and stormy day . . .">
+	<div contenteditable="true" id="editor" spellcheck="true">
 		<h1>Welcome to Typewriter!</h1><div>Typewriter is a simple, Web-based text editor. It autosaves your work to your computer, so you can just write. It doesn't send your work to any other servers.</div><h2>Some formatting options:</h2><ul><li>Make headings with ctrl + 1, ctrl + 2, ctrl + 3, and ctrl + 4, or remove a heading with ctrl + 0<li>Make text <b>bold</b> with ctrl + b<li>Make text <i>italic</i> with ctrl + i<li><u>Underline</u> text with ctrl + u<li><span style=background-color:#ff0>Highlight</span> text with ctrl + alt + h<li>Add <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">links</a> with ctrl + k (links only work if you download the document as an HTML file)<li><strike>Strike-through</strike> text with ctrl + alt + -<li>Add subscripts and superscripts with ctrl + shift + = and ctrl + shift + -<li>Create an unordered list with ctrl + shift + l<li>Create a ordered list with ctrl + alt + l<li>Insert a horizontal line with ctrl + alt + r<li>Insert an image with ctrl + alt + i<li>Indent text with tab<li>Outdent text with shift + tab<li>Remove formatting with ctrl + \</ul><h2>Other functionality:</h2><ul><li>Download your work as a text or HTML file with ctrl + s<li>Open a file with ctrl + o<li>Print your work with ctrl + p</ul><div>The preferences page can be accessed by hovering over the top-left corner and clicking the gear icon that shows up. There, you can toggle typewriter sound effects and use custom CSS.</div><div>Typewriter is free and open-source, licensed under GPL 3.0! You can view the source code here: <a href="https://github.com/DogCatPuppyLover/typewriter">https://github.com/DogCatPuppyLover/typewriter</a></div>
 	</div>
-	
+
 <script src="scripts.js"></script>
 
 </body>

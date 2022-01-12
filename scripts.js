@@ -8,9 +8,11 @@ var paperIn = new Audio("assets/audio/typewriter paper in.mp3");
 var paperOut = new Audio("assets/audio/typewriter paper out.mp3");
 keystroke.volume = 0.25;
 keystroke2.volume = 0.25;
+var paragraphTags = ["div", "p", "ul", "ol", "h1", "h2", "h3", "h4", "h5", "h6"]
 
 var file = 0;
-var key = 0;
+
+var turndownService = new TurndownService();
 
 document.execCommand("defaultParagraphSeparator", false, "div");
 document.execCommand("insertBrOnReturn", false, false);
@@ -18,37 +20,52 @@ document.execCommand("useCSS", false, true);
 
 var editor = document.getElementById("editor");
 
-var switchTab = function (id) {
-  editor.innerHTML = localStorage.getItem("file" + id);
-  file = id;
+var switchTab = function (i) {
+  editor.innerHTML = localStorage.getItem("file" + i);
+  document.getElementById("file_" + file).classList.remove("activeTab");
+  document.getElementById("file_" + i).classList.add("activeTab");
+  file = i;
 }
 
 var addToolboxTab = function (i) {
   tab = document.createElement("button");
   tab.innerHTML = "File " + (i + 1);
+  tab.id = "file_" + i;
   tab.className = "tab";
   tab.onclick = function(){switchTab(i);};
   document.getElementById("tabs").appendChild(tab);
 }
 
 var appendStyles = function (styles) {
+  // https://stackoverflow.com/a/707580
   let styleSheet = document.createElement("style");
   styleSheet.type = "text/css";
   styleSheet.innerHTML = styles;
   document.head.appendChild(styleSheet);
 }
 
+var clearEditClasses = function (node) {
+  // https://stackoverflow.com/a/22270709
+  let elems = node.querySelectorAll(".editableFocus");
+  [].forEach.call(elems, function(el) {
+    el.classList.remove("editableFocus");
+  });
+}
+
 if (localStorage.getItem("file0") !== null) {
   editor.innerHTML = localStorage.getItem("file0");
+  clearEditClasses(document);
   i = 0;
   var tab;
   while (localStorage.getItem("file" + i) !== null) {
-    addToolboxTab(i)
+    addToolboxTab(i);
     i++;
   }
+  switchTab(0);
 } else {
   localStorage.setItem("file0", editor.innerHTML);
-  addToolboxTab(0)
+  addToolboxTab(0);
+  switchTab(0);
 }
 
 if (localStorage.getItem("typewriterSounds") == "true") {
@@ -60,12 +77,11 @@ if (localStorage.getItem("spellcheck") !== null) {
 }
 
 if (localStorage.getItem("userStyles") !== null) {
-  // https://stackoverflow.com/a/707580
   appendStyles(localStorage.getItem("userStyles"));
 }
 
 if (localStorage.getItem("focusMode") == "true") {
-  appendStyles("#editor>:not(.editableFocus){opacity: 0.5;}");
+  editor.classList.add("focusMode");
 
   // https://stackoverflow.com/a/29979356
   let selectionContainer = null;
@@ -76,17 +92,16 @@ if (localStorage.getItem("focusMode") == "true") {
       newSelectionContainer = sel.getRangeAt(0).commonAncestorContainer;
 
       // Ensure we have an element rather than a text node
-      if (newSelectionContainer.nodeType != 1) {
+      while (newSelectionContainer.nodeType != 1 || !paragraphTags.includes(newSelectionContainer.tagName.toLowerCase())) {
         newSelectionContainer = newSelectionContainer.parentNode;
       }
     }
     if (newSelectionContainer != selectionContainer) {
       if (selectionContainer) {
-        selectionContainer.className = selectionContainer.className.replace(/ ?editableFocus/, "");
+        selectionContainer.classList.remove("editableFocus");
       }
       if (newSelectionContainer) {
-        newSelectionContainer.className +=
-          (newSelectionContainer.className ? " editableFocus" : "editableFocus");
+        newSelectionContainer.classList.add("editableFocus");
       }
       selectionContainer = newSelectionContainer;
     }
@@ -142,8 +157,11 @@ var openFile = function () {
 }
 
 var save = function () {
-  var innerHTML = editor.innerHTML;
-  localStorage.setItem("file" + file, innerHTML);
+  let temp = document.createElement("div");
+  temp.innerHTML = editor.innerHTML;
+  clearEditClasses(temp);
+  localStorage.setItem("file" + file, editor.innerHTML);
+  temp.remove();
 }
 
 var newTab = function () {
@@ -195,10 +213,14 @@ document.addEventListener("keydown", function (event) {
     if (event.keyCode === 83) {
       event.preventDefault();
       var date = new Date;
-      var filename = prompt("Enter filename (end it with .txt or .html to set the file type):", "typewriter " + date.getMonth() + "_" + date.getDate() + "_" + date.getFullYear() + ".txt");
+      var filename = prompt("Enter filename (.html/.txt/.md):", "typewriter " + date.getMonth() + "-" + date.getDate() + "-" + date.getFullYear() + ".html");
       if (filename !== null) {
-        if (filename.endsWith(".html") === true) {
+        if (filename.endsWith(".html")) {
           saveFile(filename, editor.innerHTML, "text/html");
+        } else if (filename.endsWith(".txt")) {
+          saveFile(filename, editor.innerText, "text/plain"); // use better HTML-to-text method that preserves lists
+        } else if (filename.endsWith(".md")) {
+          saveFile(filename, turndownService.turndown(editor.innerHTML)/*, "text/x-markdown"*/);
         } else {
           saveFile(filename, editor.innerText, "text/plain");
         }

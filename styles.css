@@ -1,27 +1,5 @@
 /* Bodoni font: https://indestructibletype.com/Bodoni.html */
 
-html {
-  font-size: 112.5%; /* 112.5% = 18px */
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 100%;
-  }
-}
-
-@keyframes fadeOut {
-  0% {
-    opacity: 100%;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
 body {
   background-color: #fafafa;
   color: black;
@@ -53,6 +31,37 @@ body {
 #editor {
   padding: 50px 20% 50px 20%;
   text-align: left;
+  opacity: 1;
+}
+
+#editor div {
+  margin-bottom: 10px;
+}
+
+.focusMode > :not(.editableFocus) {
+  opacity: 0.25;
+}
+
+html {
+  font-size: 125%; /* 112.5% = 18px, 125% = 20px */
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 @media screen and (max-width: 992px) {
@@ -77,10 +86,14 @@ body {
   #editor {
     padding: 0;
   }
-}
 
-#editor div {
-  margin-bottom: 10px;
+  #toolbox {
+    display: none;
+  }
+
+  #editor > * {
+    opacity: 1;
+  }
 }
 
 /*
@@ -192,7 +205,7 @@ a {
   outline: none;
 }
 
-.active-tab {
+.activeTab {
   background-color: #ffffff;
 }
 
@@ -210,11 +223,4 @@ a {
 
 .hide-scrollbars::-webkit-scrollbar { /* Hide scrollbars Webkit */
   display: none !important;
-}
-
-/* https://coderwall.com/p/n55a0g/fixing-contenteditable-placeholders-with-3-lines-of-css */
-
-[contenteditable=true]:empty::before {
-  content: attr(placeholder);
-  color: opacity: 0.5;
 }
