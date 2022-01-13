@@ -22,10 +22,11 @@ document.execCommand("useCSS", false, true);
 var editor = document.getElementById("editor");
 
 var switchTab = function (i) {
-  editor.innerHTML = localStorage.getItem("file" + i);
+  editor.innerHTML = localStorage.getItem("file_" + i);
   document.getElementById("file_" + file).classList.remove("activeTab");
   document.getElementById("file_" + i).classList.add("activeTab");
   file = i;
+  clearEditClasses(document);
 }
 
 var addToolboxTab = function (i) {
@@ -53,18 +54,16 @@ var clearEditClasses = function (node) {
   });
 }
 
-if (localStorage.getItem("file0") !== null) {
-  editor.innerHTML = localStorage.getItem("file0");
-  clearEditClasses(document);
+if (localStorage.getItem("file_0") !== null) {
   i = 0;
   var tab;
-  while (localStorage.getItem("file" + i) !== null) {
+  while (localStorage.getItem("file_" + i) !== null) {
     addToolboxTab(i);
     i++;
   }
   switchTab(0);
 } else {
-  localStorage.setItem("file0", editor.innerHTML);
+  localStorage.setItem("file_0", editor.innerHTML);
   addToolboxTab(0);
   switchTab(0);
 }
@@ -91,16 +90,12 @@ if (localStorage.getItem("focusMode") == "true") {
     let sel;
     if (window.getSelection && (sel = window.getSelection()).rangeCount) {
       newSelectionContainer = sel.getRangeAt(0).commonAncestorContainer;
-
-      // Ensure we have an element rather than a text node
       while (newSelectionContainer.nodeType != 1 || !paragraphTags.includes(newSelectionContainer.tagName.toLowerCase())) {
         newSelectionContainer = newSelectionContainer.parentNode;
       }
     }
     if (newSelectionContainer != selectionContainer) {
-      if (selectionContainer) {
-        selectionContainer.classList.remove("editableFocus");
-      }
+      clearEditClasses(document);
       if (newSelectionContainer) {
         newSelectionContainer.classList.add("editableFocus");
       }
@@ -162,13 +157,12 @@ var save = function () {
   temp.innerHTML = editor.innerHTML;
   clearEditClasses(temp);
   localStorage.setItem("file" + file, editor.innerHTML);
-  temp.remove();
 }
 
 var newTab = function () {
   var i = 0;
-  while (localStorage.getItem("file" + i) !== null) {i++;}
-  localStorage.setItem("file" + i, "It was a dark and stormy night . . .");
+  while (localStorage.getItem("file_" + i) !== null) {i++;}
+  localStorage.setItem("file_" + i, "It was a dark and stormy night . . .");
   addToolboxTab(i);
   switchTab(i);
 }
