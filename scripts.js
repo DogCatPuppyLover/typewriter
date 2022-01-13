@@ -192,7 +192,7 @@ editor.addEventListener("input", function (event) {
         keystroke2.currentTime = 0;
         keystroke2.play();
       }
-      key++;
+      moduloKey++;
     }
   }
   save();
