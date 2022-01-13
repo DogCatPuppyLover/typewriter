@@ -11,6 +11,7 @@ keystroke2.volume = 0.25;
 var paragraphTags = ["div", "p", "ul", "ol", "h1", "h2", "h3", "h4", "h5", "h6"]
 
 var file = 0;
+var moduloKey = 0;
 
 var turndownService = new TurndownService();
 
@@ -184,7 +185,7 @@ editor.addEventListener("input", function (event) {
       backspace.currentTime = 0;
       backspace.play();
     } else if (!(event.keyCode == 0 || event.keyCode == 37 || event.keyCode == 38 || event.keyCode == 39 || event.keyCode == 40)) {
-      if ((key % 2) == 0) {
+      if ((moduloKey % 2) == 0) {
       keystroke.currentTime = 0;
       keystroke.play();
       } else {
