@@ -1,18 +1,26 @@
 // VARIABLE DEFINITIONS
-var keystroke = new Audio("assets/audio/typewriter keystroke.mp3"); // Typewriter key sound effects: https://www.soundjay.com/typewriter-sounds.html
-var keystroke2 = new Audio("assets/audio/typewriter keystroke.mp3");
-var space = new Audio("assets/audio/typewriter space.mp3");
-var linebreak = new Audio("assets/audio/typewriter linebreak.mp3");
-var backspace = new Audio("assets/audio/typewriter backspace.mp3");
-var paperIn = new Audio("assets/audio/typewriter paper in.mp3");
-var paperOut = new Audio("assets/audio/typewriter paper out.mp3");
 
-var paragraphTags = ["div", "p", "ul", "ol", "h1", "h2", "h3", "h4", "h5", "h6"]
+// Sounds
+const keystroke = new Audio("assets/audio/typewriter keystroke.mp3"); // Typewriter key sound effects: https://www.soundjay.com/typewriter-sounds.html
+const keystroke2 = new Audio("assets/audio/typewriter keystroke.mp3");
+const space = new Audio("assets/audio/typewriter space.mp3");
+const linebreak = new Audio("assets/audio/typewriter linebreak.mp3");
+const backspace = new Audio("assets/audio/typewriter backspace.mp3");
+const paperIn = new Audio("assets/audio/typewriter paper in.mp3");
+const paperOut = new Audio("assets/audio/typewriter paper out.mp3");
+
+// Variables
 var file = 0;
 var moduloKey = 0;
-var turndownService = new TurndownService();
-var editor = document.getElementById("editor");
-var toolbox = document.getElementById("toolbox");
+const paragraphTags = ["div", "p", "ul", "ol", "h1", "h2", "h3", "h4", "h5", "h6"]
+const newFileMessages = ["It was a dark and stormy night . . .", "Psst . . . remember to save your work to your computer! LocalStorage can be unreliable.", "If you find any bugs, please report them on GitHub: https://github.com/DogCatPuppyLover/typewriter/issues"]
+
+//Libraries
+const turndownService = new TurndownService();
+
+// Elements
+const editor = document.getElementById("editor");
+const toolbox = document.getElementById("toolbox");
 
 // SOUND EFFECT SETUP
 keystroke.volume = 0.25;
@@ -24,7 +32,11 @@ document.execCommand("insertBrOnReturn", false, false);
 document.execCommand("useCSS", false, true);
 
 // FUNCTION DEFINITIONS
-var switchTab = function (i) {
+function randomNewFileMessage () {
+  return newFileMessages[Math.round(Math.random() * newFileMessages.length)];
+}
+
+function switchTab (i) {
   editor.innerHTML = localStorage.getItem("file_" + i);
   document.getElementById("file_" + file).classList.remove("activeTab");
   document.getElementById("file_" + i).classList.add("activeTab");
@@ -32,7 +44,7 @@ var switchTab = function (i) {
   clearEditClasses(document);
 }
 
-var appendStyles = function (styles) {
+function appendStyles (styles) {
   // https://stackoverflow.com/a/707580
   let styleSheet = document.createElement("style");
   styleSheet.type = "text/css";
@@ -40,7 +52,7 @@ var appendStyles = function (styles) {
   document.head.appendChild(styleSheet);
 }
 
-var clearEditClasses = function (node) {
+function clearEditClasses (node) {
   // https://stackoverflow.com/a/22270709
   let elems = node.querySelectorAll(".editableFocus");
   [].forEach.call(elems, function(el) {
@@ -51,18 +63,19 @@ var clearEditClasses = function (node) {
   });
 }
 
-var clearAttributes = function (node) {
+function clearAttributes (node, exceptions) { // Removes all attributes except the ones specified.
   // https://stackoverflow.com/a/22270709
   let elems = node.getElementsByTagName("*");
   [].forEach.call(elems, function(el) {
     // https://stackoverflow.com/a/27664638
-    while (el.attributes.length > 0) {
-      el.removeAttribute(el.attributes[0].name);
+    for (let i = 0; i < el.attributes.length; i++) {
+      if (!exceptions.includes(el.attributes[i].name))
+      el.removeAttribute(el.attributes[i].name);
     }
   });
 }
 
-var addToolboxTab = function (i) {
+function addToolboxTab (i) {
   tab = document.createElement("button");
   tab.innerHTML = "File " + (i + 1);
   tab.id = "file_" + i;
@@ -71,14 +84,14 @@ var addToolboxTab = function (i) {
   document.getElementById("tabs").appendChild(tab);
 }
 
-var save = function () {
+function save () {
   let temp = document.createElement("div");
   temp.innerHTML = editor.innerHTML;
-  clearAttributes(temp);
+  clearAttributes(temp, ["href"]);
   localStorage.setItem("file_" + file, temp.innerHTML);
 }
 
-var saveFile = function (filename, data, type) {
+function saveFile (filename, data, type) {
   var blob = new Blob([data], { type: type });
   if (window.navigator.msSaveOrOpenBlob) {
     window.navigator.msSaveBlob(blob, filename);
@@ -95,21 +108,21 @@ var saveFile = function (filename, data, type) {
   }
 }
 
-var openFile = function () {
+function openFile () {
   const reader = new FileReader();
   var fileItem = document.getElementById("fileItem").files[0];
   reader.readAsText(fileItem);
-  reader.onload = function (e) {
+  reader.onload = function (event) {
     if (fileItem.type === "text/html") {
-      editor.innerHTML = e.target.result;
+      editor.innerHTML = event.target.result;
     } else if (fileItem.type === "text/plain") {
       var splitByParagraph = "";
-      for (let i = 0; i < e.target.result.split(/\n|\n\r|\r/).length; i++) {
-        splitByParagraph = splitByParagraph + "<div>" + e.target.result.split(/\n|\n\r|\r/)[i] + "</div>";
+      for (let i = 0; i < event.target.result.split(/\n|\n\r|\r/).length; i++) {
+        splitByParagraph = splitByParagraph + "<div>" + event.target.result.split(/\n|\n\r|\r/)[i] + "</div>";
       }
       editor.innerHTML = splitByParagraph;
     } else {
-      editor.innerText = e.target.result;
+      editor.innerText = event.target.result;
     }
     save();
     if (localStorage.getItem("typewriterSounds") == "true") {
@@ -118,15 +131,15 @@ var openFile = function () {
   };
 }
 
-var newFile = function () {
+function newFile () {
   var i = 0;
   while (localStorage.getItem("file_" + i) !== null) {i++;}
-  localStorage.setItem("file_" + i, "It was a dark and stormy night . . .");
+  localStorage.setItem("file_" + i, randomNewFileMessage());
   addToolboxTab(i);
   switchTab(i);
 }
 
-// PREFERENCES
+// LOCALSTORAGE
 
 if (localStorage.getItem("file_0") !== null) {
   i = 0;
@@ -141,6 +154,8 @@ if (localStorage.getItem("file_0") !== null) {
   addToolboxTab(0);
   switchTab(0);
 }
+
+// Preferences
 
 if (localStorage.getItem("typewriterSounds") == "true") {
   paperIn.play();
@@ -198,7 +213,7 @@ document.addEventListener("keydown", function (event) {
   if (window.navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey) {
     if (event.keyCode === 83) {
       event.preventDefault();
-      var date = new Date;
+      let date = new Date;
       var filename = prompt("Enter filename (.html/.txt/.md):", "typewriter " + date.getMonth() + "-" + date.getDate() + "-" + date.getFullYear() + ".html");
       if (filename !== null) {
         if (filename.endsWith(".html")) {
