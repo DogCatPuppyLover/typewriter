@@ -313,6 +313,7 @@ document.addEventListener("keydown", function (event) {
 // Add a class to focused elements, for detecting focus on contenteditable elements: https://stackoverflow.com/a/29979356
 let selectionContainer = null;
 function updateSelectionContainer() {
+  clearEditClasses(document);
   let newSelectionContainer = null;
   let sel;
   if (window.getSelection && (sel = window.getSelection()).rangeCount) {
@@ -321,13 +322,10 @@ function updateSelectionContainer() {
       newSelectionContainer = newSelectionContainer.parentNode;
     }
   }
-  if (newSelectionContainer != selectionContainer) {
-    clearEditClasses(document);
-    if (newSelectionContainer) {
-      newSelectionContainer.classList.add("editableFocus");
-    }
-    selectionContainer = newSelectionContainer;
+  if (newSelectionContainer) {
+    newSelectionContainer.classList.add("editableFocus");
   }
+  selectionContainer = newSelectionContainer;
 }
 
 document.addEventListener('selectionchange', updateSelectionContainer); // Trigger focus detection
