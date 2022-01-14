@@ -88,7 +88,7 @@ function save () {
   let temp = document.createElement("div");
   temp.innerHTML = editor.innerHTML;
   clearAttributes(temp, ["href"]);
-  localStorage.setItem("file_" + file, temp.innerHTML);
+  localStorage.setItem("file_" + file, temp.innerHTML.trim());
 }
 
 function saveFile (filename, data, type) {
