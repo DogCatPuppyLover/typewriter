@@ -1,11 +1,19 @@
+:root {
+  --bg-color: #fafafa;
+  --text-color: #000000;
+  --caret-color: #000000;
+  --selection-color: #81d4fa;
+}
+
+
 /* Bodoni font: https://indestructibletype.com/Bodoni.html */
 
 body {
-  background-color: #fafafa;
-  color: black;
+  background-color: var(--bg-color);
+  color: var(--text-color);
   font-family: Georgia, serif;
   line-height: 1.5;
-  caret-color: black;
+  caret-color: var(--caret-color);
   animation: 1s ease-in 0s 1 fadeIn;
   word-wrap: break-word;
   hyphens: auto;
@@ -112,6 +120,8 @@ p+p {
 
 */
 
+/* Font sizes from here: http://webtypography.net/3.1.1 */
+
 h1 {
   font-size: 3rem;
   font-weight: bold;
@@ -145,16 +155,9 @@ li {
   margin: 0.5rem;
 }
 
-/* Font sizes from here: http://webtypography.net/3.1.1 */
-
-::-moz-selection {
-  color: black;
-  background: lightblue;
-}
-
 ::selection {
-  color: black;
-  background: lightblue;
+  color: var(--text-color);
+  background: var(--selection-color);
 }
 
 #editor:focus {
@@ -208,7 +211,7 @@ a {
 }
 
 .activeTab {
-  background-color: #ffffff;
+  background-color: var(--bg-color);
 }
 
 #newfile {

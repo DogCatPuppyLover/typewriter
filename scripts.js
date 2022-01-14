@@ -33,7 +33,7 @@ document.execCommand("useCSS", false, true);
 
 // FUNCTION DEFINITIONS
 function randomNewFileMessage () {
-  return newFileMessages[Math.round(Math.random() * newFileMessages.length)];
+  return newFileMessages[Math.floor(Math.random() * newFileMessages.length)];
 }
 
 function switchTab (i) {
@@ -50,6 +50,24 @@ function appendStyles (styles) {
   styleSheet.type = "text/css";
   styleSheet.innerHTML = styles;
   document.head.appendChild(styleSheet);
+}
+
+// Add a class to focused elements, for detecting focus on contenteditable elements: https://stackoverflow.com/a/29979356
+let selectionContainer = null;
+function updateSelectionContainer() {
+  clearEditClasses(document);
+  let newSelectionContainer = null;
+  let sel;
+  if (window.getSelection && (sel = window.getSelection()).rangeCount) {
+    newSelectionContainer = sel.getRangeAt(0).commonAncestorContainer;
+    while (newSelectionContainer.nodeType != 1 || !paragraphTags.includes(newSelectionContainer.tagName.toLowerCase())) {
+      newSelectionContainer = newSelectionContainer.parentNode;
+    }
+  }
+  if (newSelectionContainer) {
+    newSelectionContainer.classList.add("editableFocus");
+  }
+  selectionContainer = newSelectionContainer;
 }
 
 function clearEditClasses (node) {
@@ -311,23 +329,5 @@ document.addEventListener("keydown", function (event) {
     }
   }
 }, false);
-
-// Add a class to focused elements, for detecting focus on contenteditable elements: https://stackoverflow.com/a/29979356
-let selectionContainer = null;
-function updateSelectionContainer() {
-  clearEditClasses(document);
-  let newSelectionContainer = null;
-  let sel;
-  if (window.getSelection && (sel = window.getSelection()).rangeCount) {
-    newSelectionContainer = sel.getRangeAt(0).commonAncestorContainer;
-    while (newSelectionContainer.nodeType != 1 || !paragraphTags.includes(newSelectionContainer.tagName.toLowerCase())) {
-      newSelectionContainer = newSelectionContainer.parentNode;
-    }
-  }
-  if (newSelectionContainer) {
-    newSelectionContainer.classList.add("editableFocus");
-  }
-  selectionContainer = newSelectionContainer;
-}
 
 document.addEventListener('selectionchange', updateSelectionContainer); // Trigger focus detection
