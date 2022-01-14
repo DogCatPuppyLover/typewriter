@@ -4,7 +4,6 @@ TYPEWRITER - a simple Web-based text editor
 To-do:
 - Add support for source editing 0%
 - Close, name, and reorder tabs 0%
-- Prevent focus mode attribute from being saved 50%
 - Fix toolbar hover over un-focused text 0%
 -->
 
@@ -59,7 +58,7 @@ To-do:
 	<div id="toolbox" class="hide-scrollbars">
 		<a href="preferences.html" class="preferences" target="_blank"><img src="assets/images/bootstrap/gear-fill.svg" alt="Settings"></a>
 		<span id="tabs"></span>
-		<button onclick="newTab()" id="newfile" name="Open a new file"><img src="assets/images/bootstrap/plus-lg.svg" alt="New file"></button>
+		<button onclick="newFile()" id="newfile" name="Open a new file"><img src="assets/images/bootstrap/plus-lg.svg" alt="New file"></button>
 	</div>
 
 	<div contenteditable="true" id="editor" spellcheck="true">
