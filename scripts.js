@@ -201,11 +201,13 @@ editor.addEventListener("input", function (event) {
     document.body.style.cursor = "none"; //Hide mouse cursor
     document.body.classList.add("hide-scrollbars"); //Hide scrollbars
   }
+  toolbox.classList.remove("quickFadeIn");
 }, false);
 
 document.body.addEventListener("mousemove", function () {
   document.body.style.cursor = "auto"; //Show mouse cursor
   document.body.classList.remove("hide-scrollbars"); //Show scrollbars
+  toolbox.classList.add("quickFadeIn");
 }, false);
 
 // Keypress detection (for commands and sound effects)

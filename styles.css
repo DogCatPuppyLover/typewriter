@@ -174,14 +174,16 @@ a {
   background-color: #dfdfdf;
   overflow: auto; /* Don't wrap tabs */
   white-space: nowrap; /* Don't wrap text */
-
-  animation: 0.25s ease-in 0s 1 fadeOut; /* Fade out after mouse hover */
-  opacity: 0;
   overflow-y: hidden;
 }
 
-#toolbox:hover {
-  animation: 0.25s ease-in 0s 1 fadeIn; /* Fade in on mouse hover */
+.quickFadeOut {
+  animation: 0.25s ease-in 0s 1 fadeOut;
+  opacity: 0;
+}
+
+.quickFadeIn {
+  animation: 0.25s ease-in 0s 1 fadeIn;
   opacity: 1;
 }
 
