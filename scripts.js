@@ -13,7 +13,7 @@ const paperOut = new Audio("assets/audio/typewriter paper out.mp3");
 var file = 0;
 var moduloKey = 0;
 const paragraphTags = ["div", "p", "ul", "ol", "h1", "h2", "h3", "h4", "h5", "h6"]
-var newFileMessages = ["It was a dark and stormy night . . .", "Psst . . . remember to save your work to your computer! LocalStorage can be unreliable.", "If you find any bugs, please report them on GitHub: https://github.com/DogCatPuppyLover/typewriter/issues"]
+var newFileMessages = ["<p>It was a dark and stormy night . . .</p>", "<p>Psst . . . remember to save your work to your computer! LocalStorage can be unreliable.</p>", "<p>If you find any bugs, please report them on GitHub: <a href=\"https://github.com/DogCatPuppyLover/typewriter/issues\">https://github.com/DogCatPuppyLover/typewriter/issues</a></p>"]
 
 //Libraries
 var converter = new showdown.Converter();
