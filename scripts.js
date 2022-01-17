@@ -31,7 +31,7 @@ document.execCommand("defaultParagraphSeparator", false, "div");
 document.execCommand("insertBrOnReturn", false, false);
 document.execCommand("useCSS", false, true);
 
-// FUNCTION DEFINITIONS
+// FUNCTION DECLARATIONS
 function randomNewFileMessage () {
   return newFileMessages[Math.floor(Math.random() * newFileMessages.length)];
 }
@@ -216,16 +216,16 @@ editor.addEventListener("input", function (event) {
   }
   save();
   if (localStorage.getItem("hideMouse") !== "false") {
-    document.body.style.cursor = "none"; //Hide mouse cursor
-    document.body.classList.add("hide-scrollbars"); //Hide scrollbars
+    document.body.style.cursor = "none"; // Hide mouse cursor
+    document.body.classList.add("hide-scrollbars"); // Hide scrollbars
   }
-  toolbox.classList.remove("quickFadeIn");
+  toolbox.classList.add("quickFadeOut");
 }, false);
 
 document.body.addEventListener("mousemove", function () {
-  document.body.style.cursor = "auto"; //Show mouse cursor
-  document.body.classList.remove("hide-scrollbars"); //Show scrollbars
-  toolbox.classList.add("quickFadeIn");
+  document.body.style.cursor = "auto"; // Show mouse cursor
+  document.body.classList.remove("hide-scrollbars"); // Show scrollbars
+  toolbox.classList.remove("quickFadeOut");
 }, false);
 
 // Keypress detection (for commands and sound effects)

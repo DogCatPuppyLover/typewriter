@@ -1,8 +1,20 @@
 :root {
-  --bg-color: #fafafa;
-  --text-color: #000000;
-  --caret-color: #000000;
-  --selection-color: #a8d1ff;
+  --text-color: rgba(0, 0, 0, 1);
+  --bg-color: rgb(250, 250, 250, 1);
+  --caret-color: rgba(0, 0, 0, 1);
+  --selection-text-color: rgba(0, 0, 0, 1);
+  --selection-bg-color: rgba(168, 209, 255, 1);
+  --focus-mode-unfocused: rgba(0, 0, 0, 0.25);
+  --toolbox-text-color: rgba(0, 0, 0, 1);
+  --toolbox-bg-color: rgba(223, 223, 223, 1);
+  --tab-text-color: rgba(0, 0, 0, 1);
+  --tab-bg-color: transparent;
+  --tab-hover-text-color: rgba(0, 0, 0, 1);
+  --tab-hover-bg-color: rgba(223, 223, 223, 0.5);
+  --active-tab-text-color: rgba(0, 0, 0, 1);
+  --active-tab-bg-color: var(--bg-color);
+  --active-tab-hover-text-color: rgba(0, 0, 0, 1);
+  --active-tab-hover-bg-color: var(--active-tab-bg-color);
 }
 
 
@@ -39,15 +51,18 @@ body {
 #editor {
   padding: 50px 20% 50px 20%;
   text-align: left;
-  opacity: 1;
 }
 
 #editor div {
   margin-bottom: 10px;
 }
 
-.focusMode > :not(.editableFocus) {
-  opacity: 0.25;
+.focusMode {
+  color: var(--focus-mode-unfocused);
+}
+
+.editableFocus {
+  color: var(--text-color);
 }
 
 html {
@@ -87,8 +102,13 @@ html {
 }
 
 @media print {
+  html {
+    height: default;
+  }
+
   body {
-    background-color: #ffffff;
+    background-color: white;
+    min-height: default;
   }
 
   #editor {
@@ -99,8 +119,8 @@ html {
     display: none;
   }
 
-  #editor > * {
-    opacity: 1;
+  #editor * {
+    color: black;
   }
 }
 
@@ -156,7 +176,7 @@ li {
 }
 
 ::selection {
-  color: var(--text-color);
+  color: var(--selection-text-color);
   background: var(--selection-color);
 }
 
@@ -174,20 +194,20 @@ a {
   width: 100%;
   height: 30px;
   padding: 5px;
-  background-color: #dfdfdf;
+  background-color: var(--toolbox-bg-color);
   overflow: auto; /* Don't wrap tabs */
   white-space: nowrap; /* Don't wrap text */
   overflow-y: hidden;
 }
 
-.quickFadeOut {
-  animation: 0.25s ease-in 0s 1 fadeOut;
-  opacity: 0;
-}
-
 .quickFadeIn {
   animation: 0.25s ease-in 0s 1 fadeIn;
   opacity: 1;
+}
+
+.quickFadeOut {
+  animation: 0.25s ease-out 0s 1 fadeOut;
+  opacity: 0;
 }
 
 .tabs {
@@ -200,18 +220,30 @@ a {
   width: 150px;
   height: 30px;
   font-size: 18px;
+  background-color: var(--tab-bg-color);
+  color: var(--tab-text-color);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: clip;
   border: none;
   cursor: pointer;
   margin: 5px 5px 0 5px;
-  background-color: transparent;
   outline: none;
 }
 
+.tab:hover {
+  background-color: var(--tab-hover-bg-color);
+  color: var(--tab-hover-text-color);
+}
+
 .activeTab {
-  background-color: var(--bg-color);
+  background-color: var(--active-tab-bg-color);
+  color: var(--active-tab-text-color);
+}
+
+.activeTab:hover {
+  background-color: var(--active-tab-hover-bg-color);
+  color: var(--active-tab-hover-text-color);
 }
 
 #newfile {
