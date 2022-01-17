@@ -50,7 +50,7 @@ html {
   text-align: left;
 }
 
-#editor div {
+#editor div, #editor p {
   margin-bottom: 10px;
 }
 

@@ -13,10 +13,11 @@ const paperOut = new Audio("assets/audio/typewriter paper out.mp3");
 var file = 0;
 var moduloKey = 0;
 const paragraphTags = ["div", "p", "ul", "ol", "h1", "h2", "h3", "h4", "h5", "h6"]
-const newFileMessages = ["It was a dark and stormy night . . .", "Psst . . . remember to save your work to your computer! LocalStorage can be unreliable.", "If you find any bugs, please report them on GitHub: https://github.com/DogCatPuppyLover/typewriter/issues"]
+var newFileMessages = ["It was a dark and stormy night . . .", "Psst . . . remember to save your work to your computer! LocalStorage can be unreliable.", "If you find any bugs, please report them on GitHub: https://github.com/DogCatPuppyLover/typewriter/issues"]
 
 //Libraries
-const turndownService = new TurndownService();
+var converter = new showdown.Converter();
+converter.setOption("underline", "true");
 
 // Elements
 const editor = document.getElementById("editor");
@@ -27,7 +28,7 @@ keystroke.volume = 0.25;
 keystroke2.volume = 0.25;
 
 // CONTENTEDITABLE SETUP
-document.execCommand("defaultParagraphSeparator", false, "div");
+document.execCommand("defaultParagraphSeparator", false, "p");
 document.execCommand("insertBrOnReturn", false, false);
 document.execCommand("useCSS", false, true);
 
@@ -37,11 +38,16 @@ function randomNewFileMessage () {
 }
 
 function switchTab (i) {
-  editor.innerHTML = localStorage.getItem("file_" + i);
+  switchFile(i);
   document.getElementById("file_" + file).classList.remove("activeTab");
   document.getElementById("file_" + i).classList.add("activeTab");
   file = i;
   clearEditClasses(document);
+}
+
+function switchFile (i) {
+  fileContent = localStorage.getItem("file_" + i);
+  editor.innerHTML = normalizeFile(fileContent);
 }
 
 function appendStyles (styles) {
@@ -103,10 +109,8 @@ function addToolboxTab (i) {
 }
 
 function save () {
-  let temp = document.createElement("div");
-  temp.innerHTML = editor.innerHTML;
-  clearAttributes(temp, ["href"]);
-  localStorage.setItem("file_" + file, temp.innerHTML.trim());
+  normalizedFile = normalizeFile(editor.innerHTML);
+  localStorage.setItem("file_" + file, normalizedFile);
 }
 
 function saveFile (filename, data, type) {
@@ -126,21 +130,38 @@ function saveFile (filename, data, type) {
   }
 }
 
+function normalizeFile (fileContent) {
+  let temp = document.createElement("div");
+  temp.innerHTML = fileContent;
+  clearAttributes(temp, ["href"]);
+  tempString = String(temp.innerHTML);
+  tempString = tempString.replaceAll(/<div>/gi, "<p>").replaceAll(/<\/div>/gi, "</p>");
+  var lines = String(normalizeFile).split("<br>"); // <br> to <p>: https://stackoverflow.com/a/18494509
+  var newContent = "";
+  for (let i = 0; i < lines.length; i++) {
+     newContent += "<p>" + lines[i] + "</p>";
+   }
+   tempString = tempString.trim()
+   return tempString;
+}
+
 function openFile () {
   const reader = new FileReader();
   var fileItem = document.getElementById("fileItem").files[0];
   reader.readAsText(fileItem);
   reader.onload = function (event) {
+    var fileContent = event.target.result;
     if (fileItem.type === "text/html") {
-      editor.innerHTML = event.target.result;
+      fileContent = normalizeFile(fileContent);
+      editor.innerHTML = fileContent;
     } else if (fileItem.type === "text/plain") {
       var splitByParagraph = "";
       for (let i = 0; i < event.target.result.split(/\n|\n\r|\r/).length; i++) {
-        splitByParagraph = splitByParagraph + "<div>" + event.target.result.split(/\n|\n\r|\r/)[i] + "</div>";
+        fileContent = fileContent + "<p>" + event.target.result.split(/\n|\n\r|\r/)[i] + "</p>";
       }
-      editor.innerHTML = splitByParagraph;
+      editor.innerHTML = fileContent;
     } else {
-      editor.innerText = event.target.result;
+      editor.innerText = fileContent;
     }
     save();
     if (localStorage.getItem("typewriterSounds") == "true") {
@@ -228,6 +249,13 @@ document.body.addEventListener("mousemove", function () {
   toolbox.classList.remove("quickFadeOut");
 }, false);
 
+/*
+
+let element = window.getSelection()).rangeCount.getRangeAt(0).commonAncestorContainer;
+element.outerHTML = element.innerHTML;
+
+*/
+
 // Keypress detection (for commands and sound effects)
 document.addEventListener("keydown", function (event) {
   if (window.navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey) {
@@ -241,7 +269,7 @@ document.addEventListener("keydown", function (event) {
         } else if (filename.endsWith(".txt")) {
           saveFile(filename, editor.innerText, "text/plain"); // use better HTML-to-text method that preserves lists
         } else if (filename.endsWith(".md")) {
-          saveFile(filename, turndownService.turndown(editor.innerHTML)/*, "text/x-markdown"*/);
+          saveFile(filename, converter.makeMarkdown(editor.innerHTML)/*, "text/x-markdown"*/);
         } else {
           saveFile(filename, editor.innerText, "text/plain");
         }
@@ -257,7 +285,7 @@ document.addEventListener("keydown", function (event) {
       document.execCommand("italic", false, null);
     } else if (event.keyCode == 48) {
       event.preventDefault();
-      document.execCommand("formatBlock", false, "<div>");
+      document.execCommand("formatBlock", false, "<p>");
     } else if (event.keyCode == 49) {
       event.preventDefault();
       document.execCommand("formatBlock", false, "<h1>");
