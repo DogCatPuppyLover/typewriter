@@ -17,7 +17,12 @@ var newFileMessages = ["<p>It was a dark and stormy night . . .</p>", "<p>Psst .
 
 //Libraries
 var converter = new showdown.Converter();
-converter.setOption("underline", "true");
+/* showdown.makeMarkdown.node = function (src) {
+  switch () {
+  default:
+    txt = node.outerHTML;
+    break;
+} */ // Remove extra newline characters after unconverted tags: https://github.com/showdownjs/showdown/issues/621
 
 // Elements
 const editor = document.getElementById("editor");
@@ -46,8 +51,7 @@ function switchTab (i) {
 }
 
 function switchFile (i) {
-  fileContent = localStorage.getItem("file_" + i);
-  editor.innerHTML = normalizeFile(fileContent);
+  editor.innerHTML = localStorage.getItem("file_" + i);
 }
 
 function appendStyles (styles) {
@@ -109,8 +113,7 @@ function addToolboxTab (i) {
 }
 
 function save () {
-  normalizedFile = normalizeFile(editor.innerHTML);
-  localStorage.setItem("file_" + file, normalizedFile);
+  localStorage.setItem("file_" + file, normalizeFile(editor.innerHTML));
 }
 
 function saveFile (filename, data, type) {
@@ -135,12 +138,13 @@ function normalizeFile (fileContent) {
   temp.innerHTML = fileContent;
   clearAttributes(temp, ["href"]);
   tempString = String(temp.innerHTML);
-  tempString = tempString.replaceAll(/<div>/gi, "<p>").replaceAll(/<\/div>/gi, "</p>");
-  var lines = String(normalizeFile).split("<br>"); // <br> to <p>: https://stackoverflow.com/a/18494509
+  var lines = String(tempString).split("<br>"); // <br> to <p>: https://stackoverflow.com/a/18494509
   var newContent = "";
   for (let i = 0; i < lines.length; i++) {
      newContent += "<p>" + lines[i] + "</p>";
    }
+   tempString = newContent;
+   tempString = tempString.replaceAll(/<div>/gi, "<p>").replaceAll(/<\/div>/gi, "</p>");
    tempString = tempString.trim()
    return tempString;
 }
@@ -151,12 +155,14 @@ function openFile () {
   reader.readAsText(fileItem);
   reader.onload = function (event) {
     var fileContent = event.target.result;
-    if (fileItem.type === "text/html") {
+    if (fileItem.name.endsWith(".md") || fileItem.type === "text/x-markdown") {
+      editor.innerHTML = converter.makeHtml(fileContent);
+    } else if (fileItem.name.endsWith(".html") || fileItem.name.endsWith(".htm") || fileItem.name.endsWith(".mhtml") || fileItem.type === "text/html") {
       fileContent = normalizeFile(fileContent);
       editor.innerHTML = fileContent;
-    } else if (fileItem.type === "text/plain") {
+    } else if (fileItem.name.endsWith(".txt") || fileItem.type === "text/plain") {
       var splitByParagraph = "";
-      for (let i = 0; i < event.target.result.split(/\n|\n\r|\r/).length; i++) {
+      for (let i = 0; i < string(fileContent).split(/\n|\n\r|\r/).length; i++) {
         fileContent = fileContent + "<p>" + event.target.result.split(/\n|\n\r|\r/)[i] + "</p>";
       }
       editor.innerHTML = fileContent;
@@ -176,6 +182,22 @@ function newFile () {
   localStorage.setItem("file_" + i, randomNewFileMessage());
   addToolboxTab(i);
   switchTab(i);
+}
+
+function saveFileDialog () {
+  let date = new Date;
+  var filename = prompt("Enter filename (.html/.txt/.md):", "typewriter " + date.getMonth() + "-" + date.getDate() + "-" + date.getFullYear() + ".html");
+  if (filename !== null) {
+    if (filename.endsWith(".html")) {
+      saveFile(filename, editor.innerHTML, "text/html");
+    } else if (filename.endsWith(".txt")) {
+      saveFile(filename, editor.innerText, "text/plain"); // use better HTML-to-text method that preserves lists
+    } else if (filename.endsWith(".md")) {
+      saveFile(filename, converter.makeMarkdown(editor.innerHTML)/*, "text/x-markdown"*/);
+    } else {
+      saveFile(filename, editor.innerText, "text/plain");
+    }
+  }
 }
 
 // LOCALSTORAGE
@@ -258,102 +280,146 @@ element.outerHTML = element.innerHTML;
 
 // Keypress detection (for commands and sound effects)
 document.addEventListener("keydown", function (event) {
-  if (window.navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey) {
-    if (event.keyCode === 83) {
-      event.preventDefault();
-      let date = new Date;
-      var filename = prompt("Enter filename (.html/.txt/.md):", "typewriter " + date.getMonth() + "-" + date.getDate() + "-" + date.getFullYear() + ".html");
-      if (filename !== null) {
-        if (filename.endsWith(".html")) {
-          saveFile(filename, editor.innerHTML, "text/html");
-        } else if (filename.endsWith(".txt")) {
-          saveFile(filename, editor.innerText, "text/plain"); // use better HTML-to-text method that preserves lists
-        } else if (filename.endsWith(".md")) {
-          saveFile(filename, converter.makeMarkdown(editor.innerHTML)/*, "text/x-markdown"*/);
-        } else {
-          saveFile(filename, editor.innerText, "text/plain");
+  if ((window.navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey) && !((event.shiftKey && event.keyCode === 73) || (!event.altKey && event.keyCode === 82))) { // exclude ctrl + shift i and ctrl + r
+    switch (event.keyCode) {
+      case 83:
+        event.preventDefault();
+        saveFileDialog();
+        break;
+
+      case 79:
+        event.preventDefault();
+        document.getElementById("fileItem").click();
+        break;
+
+      case 66:
+        event.preventDefault();
+        document.execCommand("bold", false, null);
+        break;
+
+      case 73:
+        if (!event.shiftKey) { // ctrl + shift + i = inspect element
+          if (event.altKey) {
+            event.preventDefault();
+            var imgSrc = prompt("Paste the URL of the image you want to insert:");
+            if (imgSrc !== null) {
+              document.execCommand("insertImage", false, imgSrc);
+            }
+            break;
+          } else {
+            event.preventDefault();
+            document.execCommand("italic", false, null);
+            break;
+          }
         }
-      }
-    } else if (event.keyCode == 79) {
-      event.preventDefault();
-      document.getElementById("fileItem").click();
-    } else if (event.keyCode == 66) {
-      event.preventDefault();
-      document.execCommand("bold", false, null);
-    } else if (event.keyCode == 73 && event.shiftKey !== true && event.altKey !== true) {
-      event.preventDefault();
-      document.execCommand("italic", false, null);
-    } else if (event.keyCode == 48) {
-      event.preventDefault();
-      document.execCommand("formatBlock", false, "<p>");
-    } else if (event.keyCode == 49) {
-      event.preventDefault();
-      document.execCommand("formatBlock", false, "<h1>");
-    } else if (event.keyCode == 50) {
-      event.preventDefault();
-      document.execCommand("formatBlock", false, "<h2>");
-    } else if (event.keyCode == 51) {
-      event.preventDefault();
-      document.execCommand("formatBlock", false, "<h3>");
-    } else if (event.keyCode == 52) {
-      event.preventDefault();
-      document.execCommand("formatBlock", false, "<h4>");
-    } else if (event.keyCode == 85) {
-      event.preventDefault();
-      document.execCommand("underline", false, null);
-    } else if (event.keyCode == 75) {
-      event.preventDefault();
-      var linkHref = prompt("Where should the text link to? (type \"r\" to unlink)");
-      if (linkHref !== null) {
-        if (linkHref == "r") {
-          document.execCommand("unlink", false, null);
-        } else {
-          document.execCommand("createLink", false, linkHref);
+
+      case 48:
+        event.preventDefault();
+        document.execCommand("formatBlock", false, "<p>");
+        break;
+
+      case 49:
+        event.preventDefault();
+        document.execCommand("formatBlock", false, "<h1>");
+        break;
+
+      case 50:
+        event.preventDefault();
+        document.execCommand("formatBlock", false, "<h2>");
+        break;
+
+      case 51:
+        event.preventDefault();
+        document.execCommand("formatBlock", false, "<h3>");
+        break;
+
+      case 52:
+        event.preventDefault();
+        document.execCommand("formatBlock", false, "<h4>");
+        break;
+
+      case 53:
+        event.preventDefault();
+        document.execCommand("underline", false, null);
+        break;
+
+      case 75:
+        event.preventDefault();
+        var linkHref = prompt("Where should the text link to? (type \"null\" to unlink)");
+        if (linkHref !== null) {
+          if (linkHref == "null") {
+            document.execCommand("unlink", false, null);
+          } else {
+            document.execCommand("createLink", false, linkHref);
+          }
         }
-      }
-    } else if (event.keyCode == 72 && event.altKey == true) {
-      event.preventDefault();
-      var hiliteColor = prompt("What color should the highlight be? (type r to remove highlighting)", "#ffff00");
-      if (hiliteColor !== null) {
-        if (hiliteColor == "r") {
-          document.execCommand("hiliteColor", false, "#ffffff00");
-        } else {
-          document.execCommand("hiliteColor", false, "#ffff00");
+        break;
+
+      case 72:
+        if (event.altKey) {
+          event.preventDefault();
+          var hiliteColor = prompt("What color should the highlight be? (type r to remove highlighting)", "#ffff00");
+          if (hiliteColor !== null) {
+            if (hiliteColor == "r") {
+              document.execCommand("hiliteColor", false, "#ffffff00");
+            } else {
+              document.execCommand("hiliteColor", false, "#ffff00");
+            }
+          }
+          break;
         }
-      }
-    } else if (event.keyCode == 220) {
-      event.preventDefault();
-      document.execCommand("removeFormat", false, null);
-    } else if (event.keyCode == 173 && event.altKey == true) {
-      event.preventDefault();
-      document.execCommand("strikeThrough", false, null);
-    } else if (event.keyCode === 61 && event.shiftKey == true) {
-      event.preventDefault();
-      document.execCommand("subscript", false, null);
-    } else if (event.keyCode == 173 && event.shiftKey == true) {
-      event.preventDefault();
-      document.execCommand("superscript", false, null);
-    } else if (event.keyCode == 76 && event.shiftKey == true) {
-      event.preventDefault();
-      document.execCommand("insertUnorderedList", false, null);
-    } else if (event.keyCode == 76 && event.altKey == true) {
-      event.preventDefault();
-      document.execCommand("insertOrderedList", false, null);
-    } else if (event.keyCode == 82 && event.altKey == true) {
-      event.preventDefault();
-      document.execCommand("insertHorizontalRule", false, null);
-    } else if (event.keyCode == 73 && event.altKey == true) {
-      event.preventDefault();
-      var imgSrc = prompt("Paste the URL of the image you want to insert:");
-      if (imgSrc !== null) {
-        document.execCommand("insertImage", false, imgSrc);
-      }
-    } else if (event.keyCode == 9 && event.shiftKey !== true) {
-      event.preventDefault();
-      document.execCommand("indent", false, null);
-    } else if (event.keyCode == 9 && event.shiftKey == true) {
-      event.preventDefault();
-      document.execCommand("outdent", false, null);
+
+      case 220:
+        event.preventDefault();
+        document.execCommand("removeFormat", false, null);
+        break;
+
+      case 173:
+        if (event.altKey) {
+          event.preventDefault();
+          document.execCommand("strikeThrough", false, null);
+          break;
+        }
+
+      case 61:
+        if (event.shiftKey) {
+          event.preventDefault();
+          document.execCommand("subscript", false, null);
+          break;
+        }
+
+      case 173:
+        if (event.shiftKey) {
+          event.preventDefault();
+          document.execCommand("superscript", false, null);
+          break;
+        }
+
+      case 76:
+        if (event.altKey) {
+          event.preventDefault();
+          document.execCommand("insertOrderedList", false, null);
+        } else if (event.shiftKey) {
+          event.preventDefault();
+          document.execCommand("insertUnorderedList", false, null);
+          break;
+        }
+
+      case 82:
+        if (event.altKey) {
+          event.preventDefault();
+          document.execCommand("insertHorizontalRule", false, null);
+          break;
+        }
+
+      case 9:
+        event.preventDefault();
+        if (event.shiftKey) {
+          document.execCommand("indent", false, null);
+        } else {
+          document.execCommand("outdent", false, null);
+        }
+        break;
     }
   }
 }, false);
