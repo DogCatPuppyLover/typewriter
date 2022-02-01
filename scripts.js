@@ -434,6 +434,30 @@ function backwardsCompat() {
 
 // Key press detection (for keyboard shortcuts and sound effects)
 document.addEventListener("keydown", (event) => {
+  if (preferences["typewriter-sounds"] == "true") {
+    switch (event.key) {
+      case "Enter":
+        playSound(linebreak, 1.5, 1);
+        break;
+
+      case " ":
+        playSound(space, 1.5, 1);
+        break;
+
+      case "Backspace":
+        playSound(backspace, 1.5, 1);
+        break;
+
+      default:
+        if ((moduloKey % 2) == 0) { // Allow for two key sounds to overlap, to accommodate fast typing
+          playSound(keystroke, 0.3, 0.2);
+        } else {
+          playSound(keystroke2, 0.3, 0.2);
+        }
+        moduloKey++;
+    }
+  }
+
   let keys = ((window.navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey) ? "ctrl + " : "") + (event.altKey ? "alt + " : "") + (event.shiftKey ? "shift + " : "") + event.key.toLowerCase();
 
   if (event.key == "Escape") {
@@ -569,29 +593,6 @@ document.addEventListener("keydown", (event) => {
 });
 
 editor.addEventListener("input", (event) => {
-  if (preferences["typewriter-sounds"] == "true") {
-    switch (event.key) {
-      case "Enter":
-        playSound(linebreak, 1.5, 1);
-        break;
-
-      case " ":
-        playSound(space, 1.5, 1);
-        break;
-
-      case "Backspace":
-        playSound(backspace, 1.5, 1);
-        break;
-
-      default:
-        if ((moduloKey % 2) == 0) { // Allow for two key sounds to overlap, to accommodate fast typing
-          playSound(keystroke, 0.3, 0.2);
-        } else {
-          playSound(keystroke2, 0.3, 0.2);
-        }
-        moduloKey++;
-    }
-  }
   clearTimeout(saveTimeout);
   if ((Date.now() - lastSave) > 2000) { // When edited: if it has been over 2 seconds since the last autosave, save now, otherwise schedule it to be saved in 500 milliseconds (which will be cancelled if more edits are made before then.)
     save();
