@@ -6,12 +6,6 @@
 
 //Libraries
 var converter = new showdown.Converter();
-/* showdown.makeMarkdown.node = function (src) {
-  switch () {
-  default:
-    txt = node.outerHTML;
-    break;
-} */ // Remove extra newline characters after unconverted tags: https://github.com/showdownjs/showdown/issues/621
 
 // Variables
 var file = 0;
