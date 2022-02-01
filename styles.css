@@ -22,8 +22,9 @@ html {
   /* 112.5% = 18px, 125% = 20px Type scale close to major third: https://type-scale.com/ Previously used the type scale from here: http://webtypography.net/3.1.1 */
   /* Variables */
   --text-size: 1rem;
-  --line-height: 1.5;
+  --line-height: 1.6;
   --side-margin: 20%;
+  --font-weight: 400;
   --h1-text-size: 2.5rem;
   --h1-font-family: var(--font-family);
   --h1-font-weight: 700;
@@ -188,6 +189,7 @@ html {
 .monospace {
   font-size: 112.5%;
   --font-family: "IBM Plex Mono", monospace;
+  --font-weight: text;
 }
 
 .open-dyslexic {
@@ -201,6 +203,7 @@ body {
   background-color: var(--bg-color);
   color: var(--text-color);
   font-family: var(--font-family);
+  font-weight: var(--font-weight);
   line-height: var(--line-height);
   caret-color: var(--caret-color);
   word-wrap: break-word;

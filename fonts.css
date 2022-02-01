@@ -100,6 +100,22 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("assets/fonts/IBM Plex Mono/IBMPlexMono-Text.otf") format("opentype"); /*  */
+  font-weight: text;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("assets/fonts/IBM Plex Mono/IBMPlexMono-TextItalic.otf") format("opentype"); /*  */
+  font-weight: text;
+  font-style: italic;
+  font-display: swap;
+}
+
 /* Bodoni* */
 
 @font-face {
