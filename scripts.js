@@ -444,6 +444,10 @@ document.addEventListener("keydown", (event) => {
     }
   }
 
+  if (event.key == "Tab") {
+    showUI();
+  }
+
   if (editor.contains(event.target)) {
     switch (keys) {
       case "ctrl + s":
