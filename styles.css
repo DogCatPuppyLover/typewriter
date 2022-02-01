@@ -65,7 +65,7 @@ html {
   --bg-color: hsl(0, 0%, 98%);
   --link-color: darkblue;
   --selection-bg-color: lightblue;
-  --focus-mode-dimmed: hsla(0, 0, 0, 0.25);
+  --text-dimmed: hsla(0, 0%, 0%, 0.25);
   --toolbox-bg-color: hsl(0, 0%, 90%);
   --modal-bg-color: hsl(0, 0%, 98%);
   --field-bg-color: hsl(0, 0%, 90%);
@@ -77,7 +77,7 @@ html {
     --bg-color: hsl(0, 0%, 8%);
     --link-color: hsl(0, 0%, 90%);
     --selection-bg-color: hsla(210, 100%, 75%, 0.25);
-    --focus-mode-dimmed: hsla(0, 0%, 90%, 0.25);
+    --text-dimmed: hsla(0, 0%, 90%, 0.25);
     --toolbox-bg-color: black;
     --modal-bg-color: hsl(0, 0%, 12%);
     --field-bg-color: hsl(0, 0%, 16%);
@@ -89,7 +89,7 @@ html {
   --bg-color: hsl(0, 0%, 98%);
   --link-color: darkblue;
   --selection-bg-color: lightblue;
-  --focus-mode-dimmed: hsla(0, 0, 0, 0.25);
+  --text-dimmed: hsla(0, 0%, 0%, 0.25);
   --toolbox-bg-color: hsl(0, 0%, 90%);
   --modal-bg-color: hsl(0, 0%, 98%);
   --field-bg-color: hsl(0, 0%, 90%);
@@ -100,7 +100,7 @@ html {
   --bg-color: hsl(0, 0%, 8%);
   --link-color: hsl(0, 0%, 90%);
   --selection-bg-color: hsla(210, 100%, 75%, 0.25);
-  --focus-mode-dimmed: hsla(0, 0%, 90%, 0.25);
+  --text-dimmed: hsla(0, 0%, 90%, 0.25);
   --toolbox-bg-color: black;
   --modal-bg-color: hsl(0, 0%, 12%);
   --field-bg-color: hsl(0, 0%, 16%);
@@ -112,7 +112,7 @@ html {
   --link-color: hsl(0, 100%, 20%);
   /* From Freda's paper theme */
   --selection-bg-color: hsla(210, 100%, 75%, 0.25);
-  --focus-mode-dimmed: hsla(0, 0%, 0%, 0.25);
+  --text-dimmed: hsla(0, 0%, 0%, 0.25);
   --toolbox-bg-color: hsl(60, 50%, 85%);
   --accent-color: hsl(0, 100%, 80%);
   --field-bg-color: hsl(60, 50%, 85%);
@@ -124,7 +124,7 @@ html {
   --bg-color: hsl(210, 50%, 80%);
   --link-color: hsl(210, 95%, 15%);
   --selection-bg-color: hsl(210, 33%, 50%);
-  --focus-mode-dimmed: hsla(0, 0%, 0%, 0.25);
+  --text-dimmed: hsla(0, 0%, 0%, 0.25);
   --toolbox-bg-color: hsl(210, 33%, 50%);
   --accent-color: hsl(210, 33%, 50%);
   --field-bg-color: hsl(210, 50%, 70%);
@@ -135,7 +135,7 @@ html {
   --bg-color: hsl(120, 50%, 4%);
   --link-color: hsl(120, 100%, 50%);
   --selection-bg-color: hsl(120, 100%, 8%);
-  --focus-mode-dimmed: hsla(120, 100%, 50%, 0.25);
+  --text-dimmed: hsla(120, 100%, 50%, 0.25);
   --toolbox-bg-color: black;
   --field-bg-color: hsl(120, 50%, 8%);
   --accent-color: hsl(120, 100%, 50%);
@@ -143,8 +143,8 @@ html {
 }
 
 .focus-mode {
-  --toolbox-text-color: var(--focus-mode-dimmed);
-  --active-tab-text-color: var(--focus-mode-dimmed);
+  --toolbox-text-color: var(--text-dimmed);
+  --active-tab-text-color: var(--text-dimmed);
 }
 
 .serif {
@@ -232,12 +232,12 @@ html, body {
 
 .focus-mode, .focus-mode * {
   /* asterisk greys out links and other child elements in unfocused paragraphs */
-  animation: 0.1s ease-in 0s 1 focus-mode-dimmed;
-  color: var(--focus-mode-dimmed);
+  animation: 0.1s ease-in 0s 1 text-dimmed;
+  color: var(--text-dimmed);
 }
 
 .focus-mode .editable-focus, .focus-mode .editable-focus * {
-  animation: 0.1s ease-in 0s 1 focus-mode-focused;
+  animation: 0.1s ease-in 0s 1 text-focused;
   color: var(--text-color);
 }
 
@@ -459,19 +459,19 @@ label input {
   }
 }
 
-@keyframes focus-mode-dimmed {
+@keyframes text-dimmed {
   0% {
     color: var(--text-color);
   }
 
   100% {
-    color: var(--focus-mode-dimmed);
+    color: var(--text-dimmed);
   }
 }
 
-@keyframes focus-mode-focused {
+@keyframes text-focused {
   0% {
-    color: var(--focus-mode-dimmed);
+    color: var(--text-dimmed);
   }
 
   100% {
