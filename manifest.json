@@ -1,0 +1,14 @@
+{
+	"short_name": "Typewriter",
+	"name": "Typewriter",
+	"icons": [
+		{
+			"src": "assets/images/favicon.png",
+			"sizes": "960x960",
+			"type": "image/png"
+		}
+	],
+	"start_url": "/",
+	"display": "fullscreen",
+	"orientation": "any"
+}

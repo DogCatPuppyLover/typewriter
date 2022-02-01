@@ -1,19 +1,6 @@
-<!--
-TYPEWRITER - a simple Web-based text editor
-
-To-do:
-- Add support for source editing 0%
-- Close, name, and reorder tabs 0%
-- Fix toolbar hover over un-focused text 0%
-- Add built-in themes (light, dark, paper) 0%
-- Add docx and pdf support 0%
-- Fix newline added after unconverted tags: https://github.com/showdownjs/showdown/issues/621 0%
-- Manually add highlighting with <mark> 5%
--->
-
 <!DOCTYPE html>
 
-<html>
+<html class="theme-system serif">
 
 <head>
 	<meta charset="utf-8">
@@ -44,31 +31,102 @@ To-do:
 	for the JavaScript code in this page.
 	*/
 	</script>
-
-	<link rel="stylesheet" href="https://indestructibletype.com/fonts/Bodoni/Bodoni.css" type="text/css" charset="utf-8" />
-	<link rel="stylesheet" type="text/css" href="styles.css" />
-	<link rel="stylesheet" type="text/css" href="fonts.css" />
-	<script src="https://unpkg.com/showdown/dist/showdown.min.js"></script>
-	<link rel="shortcut icon" type="image/png" href="assets/images/favicon.png" />
+  <link rel="icon" type="image/png" href="assets/images/favicon.png"> <!-- Use https://realfavicongenerator.net/ Dark mode favicon: media="(prefers-color-scheme: dark) -->
+  <link rel="stylesheet" href="fonts.css">
+  <link rel="stylesheet" href="styles.css">
+  <style id="user-styles-element"></style>
 	<title>Typewriter</title>
 </head>
 
-<body>
-	<input id="fileItem" type="file" onchange="openFile()" hidden/>
-	<noscript>
-		<p> Your browser does not have JavaScript enabled! This site needs to use JavaScript to auto-save your text, play typewriter sound effects, and apply formatting. You can use Typewriter without JavaScript, but many features will not work. Click <a href="https://www.enable-javascript.com/" target="_blank">here</a> to learn how to enable JavaScript in your browser.</p>
-	</noscript>
+<!--
+TYPEWRITER - a simple Web-based text editor
 
-	<div id="toolbox" class="hide-scrollbars quickFadeIn">
-		<a href="preferences.html" class="preferences" target="_blank"><img src="assets/images/bootstrap/gear-fill.svg" alt="Preferences"></a>
+To-do:
+- Add support for source editing 0%
+- Add the ability to close, name, and reorder tabs 0%
+  - Use a single LocalStorage variable with JSON.stringify() that contains the files and preferences
+- Add built-in themes 75%
+- Add Word and PDF support 0%
+- Fix newline added after unconverted tags: https://github.com/showdownjs/showdown/issues/621 0%
+- Add highlighting with <mark> 5%
+- Add typewriter mode (vertically center current line) 0%
+- Reset formatting in new paragraph 0%
+- ctrl + shift + / to see availiable keyboard shortcuts 10%
+- Add formatting tooltip 0%
+- Add high contrast option 0%
+- Clear unclosed tags, not empty tags 0%
+- Save the current selection in LocalStorage and recover it on page load 0%
+- Develop browser extension to sync data across devices 0%
+  - To resolve conflicts, save the time of last edit of files and choose the most recently edited version
+- Auto-capitalization and smart quotes 0%
+-->
+
+<body class="fade-in">
+  <input id="file-item" type="file" onchange="openFile()" hidden>
+
+  <noscript id="js-disabled">
+    <p>It looks like your browser doesn't have JavaScript enabled! You can use Typewriter without JavaScript, but many features won't work. For example, Typewriter needs JavaScript to be able to automatically save your text. Click <a href="https://www.enable-javascript.com/" target="_blank">here</a> to learn how to enable JavaScript in your browser.</p>
+  </noscript>
+
+  <div id="toolbox" class="hide-scrollbars quick-fade-in" aria-label="toolbox" hidden>
+		<button onclick="openModal(preferencesModal)" id="preferences-button" class="icon-button" title="Preferences" aria-label="Preferences"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/><path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"/></svg></button>
 		<span id="tabs"></span>
-		<button onclick="newFile()" id="newfile" name="Create a new file"><img src="assets/images/bootstrap/plus-lg.svg" alt="Create a new file"></button>
+		<button onclick="newFile()" id="newfile" class="icon-button" title="Create a new file" aria-label="Create a new file"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/></svg></button>
 	</div>
 
-	<div id="tooltip"></div>
+	<div id="preferences-modal" class="modal" role="dialog" aria-modal="true" aria-label="preferences">
+		<button onclick="closeModal(preferencesModal)" class="icon-button modal-close" title="Close preferences" aria-label="Close preferences"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z"/><path fill-rule="evenodd" d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z"/></svg></button>
+    <form id="preferences-form">
+  		<fieldset class="image-radio">
+  			<legend>Select theme:</legend>
+  			<label><input type="radio" name="theme" value="theme-system" checked><img src="assets/images/theme-system.svg" width="100" alt="Follow your computer's theme"></label>
+  			<label><input type="radio" name="theme" value="theme-light"><img src="assets/images/theme-light.svg" width="100" alt="Light theme"></label>
+  			<label><input type="radio" name="theme" value="theme-dark"><img src="assets/images/theme-dark.svg" width="100" alt="Dark theme"></label>
+        <label><input type="radio" name="theme" value="theme-book"><img src="assets/images/theme-book.svg" width="100" alt="Book theme"></label>
+  			<label><input type="radio" name="theme" value="theme-blue"><img src="assets/images/theme-blue.svg" width="100" alt="Blue theme"></label>
+  			<label><input type="radio" name="theme" value="theme-terminal"><img src="assets/images/theme-terminal.svg" width="100" alt="Terminal theme (green text on dark background)"></label>
+  		</fieldset>
+      <fieldset>
+        <legend>Select font:</legend>
+        <label><input type="radio" name="font" value="serif" checked>Serif (Georgia, Bodoni headings)</label><br>
+        <label><input type="radio" name="font" value="sans-serif">Sans-serif (Inter)</label><br>
+        <label><input type="radio" name="font" value="monospace">Monospace (IBM Plex Mono)</label><br>
+        <label><input type="radio" name="font" value="open-dyslexic">OpenDyslexic</label>
+      </fieldset>
+      <h1>Other settings:</h1>
+      <label><input type="checkbox" name="hide-ui" value="true" checked>Hide the user interface when you start typing</label><br>
+  		<label><input type="checkbox" name="spellcheck" value="true" checked>Underline misspelled words in the editor</label><br>
+      <label><input type="checkbox" name="typewriter-sounds" value="true">Play typewriter sound effects</label><br>
+  		<label><input type="checkbox" name="focus-mode" value="true">Dim inactive paragraphs</label>
+      <h1>Set custom CSS styles</h1>
+<textarea id="user-styles" name="user-styles" spellcheck="false">/* You can do most things with the CSS variables defined in the source code: https://github.com/DogCatPuppyLover/typewriter/blob/main/styles.css (:root is used over html for specificity over the base styles.) */
 
-	<div contenteditable="true" id="editor" spellcheck="true"><h1>Welcome to Typewriter!</h1><p>Typewriter is a simple, Web-based text editor. It automatically saves your work to your computer, so you can just write.</p><h2>Some formatting options:</h2><ul><li>Make headings with ctrl + 1, ctrl + 2, ctrl + 3, and ctrl + 4, or remove a heading with ctrl + 0</li><li>Make text <b>bold</b> with ctrl + b</li><li>Make text <i>italic</i> with ctrl + i</li><li><u>Underline</u> text with ctrl + u</li><li>Add <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">links</a> with ctrl + k</li><li><strike>Strike-through</strike> text with ctrl + alt + -</li><li>Create a bulleted list with ctrl + shift + l</li><li>Create a numbered list with ctrl + alt + l</li><li>Insert a horizontal line with ctrl + alt + r</li><li>Insert an image with ctrl + alt + i</li><li>Indent text with tab<li>Outdent text with shift + tab</li><li>Remove formatting with ctrl + \</ul><h2>Other functionality:</h2><ul><li>Download your work as a text or HTML file with ctrl + s</li><li>Open a file with ctrl + o</li><li>Print your work with ctrl + p</li></ul><p>Typewriter is free and open-source, licensed under GPL 3.0! You can view the source code here: <a href="https://github.com/DogCatPuppyLover/typewriter">https://github.com/DogCatPuppyLover/typewriter</a></p></div>
+:root {
+  /* Put your rules here . . . */
+}</textarea>
+			<input type="submit" id="save-preferences" value="Save preferences">
+    </form>
+	</div>
 
+	<div contenteditable="true" id="editor" spellcheck="true" aria-label="editor">
+    <h1>Welcome to Typewriter!</h1>
+    <p>Typewriter is a Web-based writing app that aims to provide a simple and intuitive environment for you to write in. Your work is automatically saved to your browser's LocalStorage, which means that it'll be saved when you reload the page or restart your browser.</p>
+    <ul>
+      <li>Create a new file by pressing the + button at the top of the screen</li>
+      <li>Download your work as a text, HTML, or Markdown file (ctrl + s)</li>
+      <li>Open a local file in a new tab (ctrl + o)</li>
+      <li>Print your work (ctrl + p)</li>
+      <li>Add headings (ctrl + 1, ctrl + 2, ctrl + 3, ctrl + 4) or remove headings (ctrl + 0)</li>
+      <li>Make text <b>bold</b> (ctrl + b)</li>
+      <li>Make text <i>italic</i> (ctrl + i)</li>
+      <li>Add <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">links</a> (ctrl + k)</li>
+      <li><strike>Strike-through</strike> text (ctrl + alt + -)</li>
+      <li>Add bulleted (ctrl + shift + l) or numbered (ctrl + alt + l) lists</li>
+    </ul>
+    <p>Typewriter is free and open-source software, licensed under GPL 3.0. You can view the source code and report issues here: <a href="https://github.com/DogCatPuppyLover/typewriter">https://github.com/DogCatPuppyLover/typewriter</a></p>
+  </div>
+
+<script src="assets/libraries/showdown.min.js"></script>
 <script src="scripts.js"></script>
 
 </body>

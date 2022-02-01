@@ -5,8 +5,9 @@ Typewriter is a simple, FOSS, Web-based text editor that aims to provide a simpl
 ## Features
 
 - Simple and intuitive layout
-- Formatting with keyboard shortcuts
-- Typewriter sounds
-- Multiple files
-- Carefully-chosen typography
-- Export to plain text or HTML
+- Multiple color themes - light, dark, blue, and book
+- Format text with keyboard shortcuts
+- Typewriter sound effects
+- Focus mode: highlight the current paragraph
+- Open multiple files in a tab layout
+- Export to plain text, Markdown, or HTML
