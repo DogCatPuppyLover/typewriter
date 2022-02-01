@@ -44,7 +44,7 @@ keystroke2.volume = 0.1;
 
 document.execCommand("defaultParagraphSeparator", false, "p");
 document.execCommand("insertBrOnReturn", false, false);
-document.execCommand("useCSS", false, true);
+document.execCommand("styleWithCSS", false, false);
 
 editor.focus(); // This might be an accessibility problem, and the behavior is not consistent across browsers: https://github.com/guardian/scribe/blob/master/BROWSERINCONSISTENCIES.md
 
