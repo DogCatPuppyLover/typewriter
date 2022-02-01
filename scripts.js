@@ -428,7 +428,7 @@ function backwardsCompat() {
   var deprecatedStorage = ["userStyles", "hideMouse", "spellcheck", "typewriterSounds", "focusMode"];
   deprecatedStorage.forEach((key) => {
     if (key === "userStyles") {
-      if (localStorage.getItem("userStyles") != null) {
+      if (localStorage.getItem("userStyles") != null && localStorage.getItem("userStyles") != "") {
         document.getElementById("user-styles").value = localStorage.getItem("userStyles");
       }
     }
