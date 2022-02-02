@@ -1,3 +1,5 @@
+/* Minify and concatenate with fonts.css: https://www.minifier.org/ */
+
 /* RESETS */
 *,
 *:before,
@@ -66,7 +68,7 @@ html {
   --link-color: darkblue;
   --selection-bg-color: lightblue;
   --text-dimmed: hsla(0, 0%, 0%, 0.25);
-  --toolbox-bg-color: hsl(0, 0%, 90%);
+  --toolbox-bg-color: hsl(0, 0%, 80%);
   --modal-bg-color: hsl(0, 0%, 98%);
   --field-bg-color: hsl(0, 0%, 90%);
 }
@@ -90,7 +92,7 @@ html {
   --link-color: darkblue;
   --selection-bg-color: lightblue;
   --text-dimmed: hsla(0, 0%, 0%, 0.25);
-  --toolbox-bg-color: hsl(0, 0%, 90%);
+  --toolbox-bg-color: hsl(0, 0%, 80%);
   --modal-bg-color: hsl(0, 0%, 98%);
   --field-bg-color: hsl(0, 0%, 90%);
 }
@@ -367,6 +369,7 @@ textarea {
   width: 100%;
   height: 200px;
   font-family: "IBM Plex Mono";
+  font-weight: 400;
   font-size: 75%;
   color: var(--text-color);
   padding: 10px;

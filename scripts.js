@@ -1,4 +1,4 @@
-// Lint with https://jshint.com/
+// Lint with [JS Hint](https://jshint.com/) and compress with [Terser](https://try.terser.org/)
 
 "use strict";
 
@@ -604,8 +604,6 @@ editor.addEventListener("input", (event) => {
 
 document.body.addEventListener("mousemove", showUI);
 
-// submit handler
-
 preferencesForm.addEventListener("submit", (event) => { // https://developer.mozilla.org/en-US/docs/Web/API/FormDataEvent/formData
   event.preventDefault();
   processPreferences();
@@ -614,3 +612,7 @@ preferencesForm.addEventListener("submit", (event) => { // https://developer.moz
 });
 
 document.addEventListener("selectionchange", updateSelectionContainer); // Trigger focus detection
+document.getElementById("preferences-button").addEventListener("click", () => {openModal(preferencesModal)});
+document.getElementById("close-preferences-button").addEventListener("click", () => {closeModal(preferencesModal)});
+document.getElementById("newfile").addEventListener("click", () => {newFile()});
+document.getElementById("file-item").addEventListener("change", () => {openFile()});
