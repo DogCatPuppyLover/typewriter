@@ -17,5 +17,6 @@
 * Develop browser extension to sync data across devices 0%
   * To resolve conflicts, save the time of last edit of files and choose the most recently edited version
 * Auto-capitalization and smart quotes 0%
-* Use [Real Favicon Generator](https://realfavicongenerator.net/)
+* Use [Real Favicon Generator](https://realfavicongenerator.net/) to generate favicons
   * Dark mode favicon: media="(prefers-color-scheme: dark)"
+* Dynamically generate welcome text based on browser capabilities 0%
