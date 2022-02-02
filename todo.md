@@ -1,4 +1,5 @@
-To-do:
+#To-do:
+
 * Add support for source editing 0%
 * Add the ability to close, name, and reorder tabs 0%
   * Use a single LocalStorage variable with JSON.stringify() that contains the files and preferences 50%

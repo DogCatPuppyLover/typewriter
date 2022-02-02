@@ -1,5 +1,4 @@
-// Lint with [JS Hint](https://jshint.com/) and compress with [Terser](https://try.terser.org/)
-
+(function () {
 "use strict";
 
 // VARIABLE DEFINITIONS
@@ -95,7 +94,7 @@ function openFile() {
     var splitExtension = fileItem.name.split(".");
     var fileExtension = splitExtension[splitExtension.length];
 
-    function exportText() {
+    function importText() {
       let splitByParagraph = "";
       for (let i = 0; i < fileContent.split(/\n|\n\r|\r/).length; i++) {
         splitByParagraph = splitByParagraph + "<p>" + event.target.result.split(/\n|\n\r|\r/)[i] + "</p>";
@@ -103,42 +102,42 @@ function openFile() {
       editor.innerHTML = splitByParagraph;
     }
 
-    function exportHtml() {
+    function importHtml() {
       fileContent = normalizeFile(fileContent);
       editor.innerHTML = fileContent;
     }
 
-    function exportMarkdown() {
+    function importMarkdown() {
       editor.innerHTML = converter.makeHtml(fileContent);
     }
 
     switch (fileItem.type) {
       case "text/x-markdown":
-        exportMarkdown();
+        importMarkdown();
         break;
 
       case "text/html":
-        exportHtml();
+        importHtml();
         break;
 
       case "text/plain":
-        exportText();
+        importText();
         break;
 
       default:
         switch (fileExtension) {
           case "md":
-            exportMarkdown();
+            importMarkdown();
             break;
 
           case "html":
           case "htm":
           case "mhtml":
-            exportHtml();
+            importHtml();
             break;
 
           case "txt":
-            exportText();
+            importText();
             break;
 
           default:
@@ -616,3 +615,4 @@ document.getElementById("preferences-button").addEventListener("click", () => {o
 document.getElementById("close-preferences-button").addEventListener("click", () => {closeModal(preferencesModal)});
 document.getElementById("newfile").addEventListener("click", () => {newFile()});
 document.getElementById("file-item").addEventListener("change", () => {openFile()});
+}());
