@@ -24,9 +24,11 @@ html {
   /* 112.5% = 18px, 125% = 20px Type scale close to major third: https://type-scale.com/ Previously used the type scale from here: http://webtypography.net/3.1.1 */
   /* Variables */
   --text-size: 1rem;
-  --line-height: 1.6;
+  --line-height: 1.8;
   --side-margin: 20%;
   --font-weight: 400;
+  --accent-color: hsl(198, 75%, 62%);
+  --link-color: var(--accent-color);
   --h1-text-size: 2.5rem;
   --h1-font-family: var(--font-family);
   --h1-font-weight: 700;
@@ -43,7 +45,7 @@ html {
   --h4-font-family: var(--font-family);
   --h4-font-weight: 700;
   --h4-font-style: normal;
-  --caret-color: var(--text-color);
+  --caret-color: var(--accent-color);
   --selection-text-color: var(--text-color);
   --toolbox-text-color: var(--text-color);
   --tab-bg-color: transparent;
@@ -52,21 +54,22 @@ html {
   --active-tab-bg-color: var(--bg-color);
   --modal-bg-color: var(--bg-color);
   --field-bg-color: var(--bg-color);
-  --accent-color: hsl(214, 82%, 51%);
   --submit-button-text-color: var(--text-color);
   --submit-button-bg-color: var(--accent-color);
   /* Choose better color */
+
   /* Styles */
   accent-color: var(--accent-color);
 }
 
 /* Background -> Modal -> Field */
 
+/* Inspited by the Writer Color Scheme by Niki Tonsky: https://github.com/tonsky/sublime-scheme-writer */
+
 .theme-system {
-  --text-color: black;
-  --bg-color: hsl(0, 0%, 98%);
-  --link-color: darkblue;
-  --selection-bg-color: lightblue;
+  --text-color: hsla(0, 0%, 10%, 1);
+  --bg-color: hsl(0, 0%, 97%);
+  --selection-bg-color: hsl(199, 61%, 88%);
   --text-dimmed: hsla(0, 0%, 0%, 0.25);
   --toolbox-bg-color: hsl(0, 0%, 80%);
   --modal-bg-color: hsl(0, 0%, 98%);
@@ -87,10 +90,9 @@ html {
 }
 
 .theme-light {
-  --text-color: black;
-  --bg-color: hsl(0, 0%, 98%);
-  --link-color: darkblue;
-  --selection-bg-color: lightblue;
+  --text-color: hsla(0, 0%, 10%, 1);
+  --bg-color: hsl(0, 0%, 97%);
+  --selection-bg-color: hsl(199, 61%, 88%);
   --text-dimmed: hsla(0, 0%, 0%, 0.25);
   --toolbox-bg-color: hsl(0, 0%, 80%);
   --modal-bg-color: hsl(0, 0%, 98%);
@@ -190,8 +192,7 @@ html {
 
 .monospace {
   font-size: 112.5%;
-  --font-family: "IBM Plex Mono", monospace;
-  --font-weight: text;
+  --font-family: "Writer", monospace;
 }
 
 .open-dyslexic {
@@ -238,12 +239,18 @@ html, body {
   color: var(--text-dimmed);
 }
 
+.focus-mode a {
+  animation: 0.1s ease-in 0s 1 link-dimmed;
+  color: var(--text-dimmed);
+}
+
 .focus-mode .editable-focus, .focus-mode .editable-focus * {
   animation: 0.1s ease-in 0s 1 text-focused;
   color: var(--text-color);
 }
 
 .focus-mode .editable-focus a {
+  animation: 0.1s ease-in 0s 1 link-focused;
   color: var(--link-color);
 }
 
@@ -368,8 +375,7 @@ button, input, textarea {
 textarea {
   width: 100%;
   height: 200px;
-  font-family: "IBM Plex Mono";
-  font-weight: 400;
+  font-family: "Writer";
   font-size: 75%;
   color: var(--text-color);
   padding: 10px;
@@ -479,6 +485,26 @@ label input {
 
   100% {
     color: var(--text-color);
+  }
+}
+
+@keyframes link-dimmed {
+  0% {
+    color: var(--link-color);
+  }
+
+  100% {
+    color: var(--text-dimmed);
+  }
+}
+
+@keyframes link-focused {
+  0% {
+    color: var(--text-dimmed);
+  }
+
+  100% {
+    color: var(--link-color);
   }
 }
 

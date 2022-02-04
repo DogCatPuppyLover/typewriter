@@ -68,85 +68,46 @@
   font-display: swap;
 }
 
-/* IBM Plex Mono */
+/* Writer */
 
 @font-face {
-  font-family: "IBM Plex Mono";
-  src: url("assets/fonts/IBM Plex Mono/IBMPlexMono-Regular.otf") format("opentype"); /*  */
+  font-family: "Writer";
+  src: url("assets/fonts/Writer/Writer-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "IBM Plex Mono";
-  src: url("assets/fonts/IBM Plex Mono/IBMPlexMono-Bold.otf") format("opentype");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "IBM Plex Mono";
-  src: url("assets/fonts/IBM Plex Mono/IBMPlexMono-Italic.otf") format("opentype"); /*  */
+  font-family: "Writer";
+  src: url("assets/fonts/Writer/Writer-Italic.ttf") format("truetype");
   font-weight: 400;
   font-style: italic;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "IBM Plex Mono";
-  src: url("assets/fonts/Source Code Pro/IBMPlexMono-BoldItalic.otf") format("opentype");
+  font-family: "Writer";
+  src: url("assets/fonts/Writer/Writer-Bold.ttf") format("truetype");
   font-weight: 700;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "IBM Plex Mono";
-  src: url("assets/fonts/IBM Plex Mono/IBMPlexMono-Text.otf") format("opentype"); /*  */
-  font-weight: text;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "IBM Plex Mono";
-  src: url("assets/fonts/IBM Plex Mono/IBMPlexMono-TextItalic.otf") format("opentype"); /*  */
-  font-weight: text;
+  font-family: "Writer";
+  src: url("assets/fonts/Writer/Writer-BoldItalic.ttf") format("truetype");
+  font-weight: 700;
   font-style: italic;
   font-display: swap;
 }
 
 /* Bodoni* */
-@font-face {
-    font-family: "Bodoni 24";
-    src: url("assets/fonts/Bodoni/Bodoni-24-Book.otf") format("opentype");
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-}
 
 @font-face {
     font-family: "Bodoni 24";
     src: url("assets/fonts/Bodoni/Bodoni-24-Book-Italic.otf") format("opentype");
     font-weight: 400;
-    font-style: italic;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: "Bodoni 24";
-    src: url("assets/fonts/Bodoni/Bodoni-24-Medium.otf") format("opentype");
-    font-weight: 500;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: "Bodoni 24";
-    src: url("assets/fonts/Bodoni/Bodoni-24-Medium-Italic.otf") format("opentype");
-    font-weight: 500;
     font-style: italic;
     font-display: swap;
 }
@@ -168,52 +129,6 @@
 }
 
 @font-face {
-    font-family: "Bodoni 24";
-    src: url("assets/fonts/Bodoni/Bodoni-24-Fatface.otf") format("opentype");
-    font-weight: 900;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: "Bodoni 24";
-    src: url("assets/fonts/Bodoni/Bodoni-24-Fatface-Italic.otf") format("opentype");
-    font-weight: 900;
-    font-style: italic;
-    font-display: swap;
-}@font-face {
-    font-family: "Bodoni 48";
-    src: url("assets/fonts/Bodoni/Bodoni-48-Book.otf") format("opentype");
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: "Bodoni 48";
-    src: url("assets/fonts/Bodoni/Bodoni-48-Book-Italic.otf") format("opentype");
-    font-weight: 400;
-    font-style: italic;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: "Bodoni 48";
-    src: url("assets/fonts/Bodoni/Bodoni-48-Medium.otf") format("opentype");
-    font-weight: 500;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: "Bodoni 48";
-    src: url("assets/fonts/Bodoni/Bodoni-48-Medium-Italic.otf") format("opentype");
-    font-weight: 500;
-    font-style: italic;
-    font-display: swap;
-}
-
-@font-face {
     font-family: "Bodoni 48";
     src: url("assets/fonts/Bodoni/Bodoni-48-Bold.otf") format("opentype");
     font-weight: 700;
@@ -229,21 +144,7 @@
     font-display: swap;
 }
 
-@font-face {
-    font-family: "Bodoni 48";
-    src: url("assets/fonts/Bodoni/Bodoni-48-Fatface.otf") format("opentype");
-    font-weight: 900;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: "Bodoni 48";
-    src: url("assets/fonts/Bodoni/Bodoni-48-Fatface-Italic.otf") format("opentype");
-    font-weight: 900;
-    font-style: italic;
-    font-display: swap;
-}/* Inter */
+/* Inter */
 
 @font-face {
   font-family: 'Inter';

@@ -570,9 +570,9 @@ document.addEventListener("keydown", (event) => {
         break;
 
       case "ctrl + shift + l":
-        event.preventDefault();
-        document.execCommand("insertOrderedList", false, null);
-        break;
+         event.preventDefault();
+         document.execCommand("insertOrderedList", false, null);
+         break;
 
       case "ctrl + alt + l":
         event.preventDefault();
@@ -593,7 +593,7 @@ document.addEventListener("keydown", (event) => {
 
 editor.addEventListener("input", (event) => {
   clearTimeout(saveTimeout);
-  if ((Date.now() - lastSave) > 2000) { // When edited: if it has been over 2 seconds since the last autosave, save now, otherwise schedule it to be saved in 500 milliseconds (which will be cancelled if more edits are made before then.)
+  if ((Date.now() - lastSave) > 2000) { // When edited: if it has been over 1 second since the last autosave, save now, otherwise schedule it to be saved in 500 milliseconds (which will be cancelled if more edits are made before then.)
     save();
   } else {
     saveTimeout = setTimeout(save, 500);
@@ -611,8 +611,21 @@ preferencesForm.addEventListener("submit", (event) => { // https://developer.moz
 });
 
 document.addEventListener("selectionchange", updateSelectionContainer); // Trigger focus detection
-document.getElementById("preferences-button").addEventListener("click", () => {openModal(preferencesModal)});
-document.getElementById("close-preferences-button").addEventListener("click", () => {closeModal(preferencesModal)});
-document.getElementById("newfile").addEventListener("click", () => {newFile()});
-document.getElementById("file-item").addEventListener("change", () => {openFile()});
+
+addEventListener("beforeunload", () => {
+  save(); // Autosave before page is closed
+});
+
+document.getElementById("preferences-button").addEventListener("click", () => {
+  openModal(preferencesModal);
+});
+
+document.getElementById("close-preferences-button").addEventListener("click", () => {
+  closeModal(preferencesModal);
+});
+
+document.getElementById("newfile").addEventListener("click", newFile);
+
+document.getElementById("file-item").addEventListener("change", openFile);
+
 }());
