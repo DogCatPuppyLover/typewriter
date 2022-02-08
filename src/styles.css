@@ -56,7 +56,7 @@ html {
   --field-bg-color: var(--bg-color);
   --submit-button-text-color: var(--text-color);
   --submit-button-bg-color: var(--accent-color);
-  /* Choose better color */
+  --margin-note-text-size: calc(0.75 * var(--text-size));
 
   /* Styles */
   accent-color: var(--accent-color);
@@ -216,6 +216,13 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+small {
+  font-size: var(--margin-note-text-size);
+  float: right;
+  width: 20%;
+  margin-right: -15vw;
+}
+
 html, body {
   /* Stretch page to full height or more, for hiding the mouse: https://stackoverflow.com/a/32384608 */
   padding: 0;
@@ -227,6 +234,7 @@ html, body {
   padding: 50px var(--side-margin);
   text-align: left;
   min-height: 100vh;
+  overflow: auto;
 }
 
 #editor p, #editor div {
@@ -351,6 +359,7 @@ a {
   overflow: auto;
   display: none;
   overscroll-behavior: none;
+  z-index: 1;
 }
 
 .modal-open {
@@ -534,6 +543,9 @@ label input {
   /* Hide scrollbars in Edge */
   scrollbar-width: none;
   /* Hide scrollbars in Firefox */
+}
+
+.hide-scrollbars.compensate-width {
   margin-right: 17px;
   /* Not sure why 17px - maybe 2px + 15px? Also, this should only be active when the scrollbars are present. */
 }
@@ -543,19 +555,25 @@ label input {
   display: none;
 }
 
+/* MEDIA QUERIES */
+
 @media screen and (max-width: 992px) {
   html {
-    --side-margin: 10%;
+    --side-margin: 15%;
+  }
+
+  small {
+    float: unset;
+    margin: 0 var(--text-size);
   }
 }
 
 @media screen and (max-width: 600px) {
   html {
-    --side-margin: 10%;
+    font-size: 112.5% !important;
   }
 }
 
-/* MEDIA QUERIES */
 @media print {
   html {
     height: default;
