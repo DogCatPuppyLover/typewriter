@@ -14,7 +14,7 @@
   var selectionContainer = null;
   var preferences;
   const paragraphTags = ["DIV", "P", "UL", "OL", "H1", "H2", "H3", "H4", "H5", "H6", "SMALL"];
-  const acceptedTags = ["P", "UL", "OL", "H1", "H2", "H3", "H4", "H5", "H6", "SMALL", "B", "I", "U", "A", "STRIKE", "SUP", "SUB"];
+  const acceptedTags = ["P", "UL", "OL", "LI", "H1", "H2", "H3", "H4", "H5", "H6", "SMALL", "B", "I", "U", "A", "STRIKE", "SUP", "SUB"];
   const newFileMessages = ["<p>It was a dark and stormy night . . .</p>", "<p>Psst . . . remember to save your work to your computer! LocalStorage can be unreliable.</p>", "<p>If you find a bug or would like to request a feature, please submit an issue on GitHub: <a href=\"https://github.com/DogCatPuppyLover/typewriter/issues\">https://github.com/DogCatPuppyLover/typewriter/issues</a></p>", "<p>Thank you for using Typewriter! <3</p>", "<p>Never gonna give you up</p><p>Never gonna let you down</p><p>Never gonna run around and desert you</p><p>Never gonna make you cry</p><p>Never gonna say goodbye</p><p>Never gonna tell a lie and hurt you</p>", "Lorem ipsum dolor sit amet, consectetur adipiscing elit."];
   var checkboxPreferences = [];
   var radioPreferences = [];
