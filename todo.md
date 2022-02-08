@@ -20,3 +20,6 @@
 * Use [Real Favicon Generator](https://realfavicongenerator.net/) to generate favicons
   * Dark mode favicon: media="(prefers-color-scheme: dark)"
 * Dynamically generate welcome text based on browser capabilities 0%
+* Add analytics
+* Add changelog
+* Add system to notify people of new features
