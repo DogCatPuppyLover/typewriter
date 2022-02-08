@@ -613,7 +613,9 @@ preferencesForm.addEventListener("submit", (event) => { // https://developer.moz
 document.addEventListener("selectionchange", updateSelectionContainer); // Trigger focus detection
 
 addEventListener("beforeunload", () => {
-  save(); // Autosave before page is closed
+  if (normalizeFile(editor.innerHTML) != localStorage.getItem("file_" + file)) {
+    save();
+  } // Autosave before page is closed
 });
 
 document.getElementById("preferences-button").addEventListener("click", () => {
