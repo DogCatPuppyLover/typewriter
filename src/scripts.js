@@ -294,12 +294,14 @@
       }
       tempHTML = joined;
     }
-    tempHTML = tempHTML.replace(/<div>/gi, "<p>").replaceAll(/<\/div>/gi, "</p>"); // Replace all <div> tags with <p> tags, remove extra whitespace (https://stackoverflow.com/a/14053282/), remove newlines, and remove whitespace at the ends of the string
     temp.innerHTML = tempHTML;
     clearAttributes(temp, ["href"]); // Remove all attributes (e.g. classes) except href (to preserve links)
     clearEmptyTags(temp, ["img"]); // This should clear unclosed tags, not empty tags. Empty <p> tags are acceptable; unclosed ones, like the ones that are generated when you try to wrap a <p> in another <p>, are not. This might be able to use a modified version of this: https://stackoverflow.com/a/22720661/
+    tempHTML = temp.innerHTML;
+    tempHTML = tempHTML.replace(/<div>/gi, "<p>").replace(/<\/div>/gi, "</p>").replace(/<strong>/gi, "<b>").replace(/<\/strong>/gi, "</b>").replace(/<em>/gi, "<i>").replace(/<\/em>/gi, "</i>"); // Replace all <div> tags with <p> tags, <strong> -> <b>, and <em> to <i>
+    temp.innerHTML = tempHTML;
     clearUnacceptedTags(temp);
-    tempHTML = temp.innerHTML.replace(/\s{2,}/g, " ").replaceAll("\n", "").trim();
+    tempHTML = temp.innerHTML.replace(/\s{2,}/g, " ").replaceAll("\n", "").trim();  // Remove extra whitespace (https://stackoverflow.com/a/14053282/), remove newlines, and remove whitespace at the ends of the string
     return tempHTML;
   }
 
