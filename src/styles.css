@@ -25,7 +25,7 @@ html {
   /* Variables */
   --text-size: 1rem;
   --line-height: 1.8;
-  --side-margin: 20%;
+  --side-margin: 20vw;
   --font-weight: 400;
   --accent-color: hsl(198, 75%, 62%);
   --link-color: var(--accent-color);
@@ -220,6 +220,7 @@ small {
   font-size: var(--margin-note-text-size);
   float: right;
   width: 20%;
+  margin: 0;
   margin-right: -15vw;
 }
 
@@ -238,7 +239,8 @@ html, body {
 }
 
 #editor p, #editor div {
-  margin-bottom: 10px;
+  margin: 0px;
+  margin-block-end: 10px;
 }
 
 .focus-mode, .focus-mode * {
@@ -563,8 +565,8 @@ label input {
   }
 
   small {
-    float: unset;
-    margin: 0 var(--text-size);
+    float: right;
+    margin: 1em;
   }
 }
 
@@ -574,27 +576,42 @@ label input {
   }
 }
 
-@media print {
-  html {
-    height: default;
-    --text-size: 12pt;
-    --bg-color: white;
-  }
+@page {
+  margin: 0;
+}
 
-  body {
-    min-height: default;
-    line-height: default;
+@media print {
+  * {
+    --text-size: 11pt;
+    font-size: 11pt;
+    background-color: none !important;
+    color: black !important;
+    opacity: 1 !important;
   }
 
   #editor {
-    padding: 0;
+    height: default;
+    padding: 0 2.5in 0 1in;
+    margin: 1in 0;
   }
 
-  #toolbox {
+  h1:not(:first-child) { /* https://stackoverflow.com/questions/1664049/can-i-force-a-page-break-in-html-printing#comment51029810_1664070 */
+    page-break-before: always;
+  }
+
+  a {
+    text-decoration: underline;
+  }
+
+  small {
+    font-size: 8pt;
+    float: right;
+    width: 1.5in;
+    margin: 0;
+    margin-right: -2in;
+  }
+
+  #toolbox, #preferences-modal {
     display: none;
-  }
-
-  #editor * {
-    color: black;
   }
 }
