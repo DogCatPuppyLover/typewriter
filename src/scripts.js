@@ -15,7 +15,7 @@
   var preferences;
   const paragraphTags = ["DIV", "P", "UL", "OL", "H1", "H2", "H3", "H4", "H5", "H6", "SMALL"];
   const acceptedTags = ["P", "UL", "OL", "LI", "H1", "H2", "H3", "H4", "H5", "H6", "SMALL", "B", "I", "U", "A", "STRIKE", "SUP", "SUB"];
-  const newFileMessages = ["<p>It was a dark and stormy night . . .</p>", "<p>Psst . . . remember to save your work to your computer! LocalStorage can be unreliable.</p>", "<p>If you find a bug or would like to request a feature, please submit an issue on GitHub: <a href=\"https://github.com/DogCatPuppyLover/typewriter/issues\">https://github.com/DogCatPuppyLover/typewriter/issues</a></p>", "<p>Thank you for using Typewriter! <3</p>", "<p>Never gonna give you up</p><p>Never gonna let you down</p><p>Never gonna run around and desert you</p><p>Never gonna make you cry</p><p>Never gonna say goodbye</p><p>Never gonna tell a lie and hurt you</p>", "Lorem ipsum dolor sit amet, consectetur adipiscing elit."];
+  const newFileMessages = ["<p>It was a dark and stormy night . . .</p>", "<p>Psst . . . remember to save your work to your computer! LocalStorage can be unreliable.</p>", "<p>If you find a bug or would like to request a feature, please submit an issue on GitHub: <a href=\"https://github.com/DogCatPuppyLover/typewriter/issues\">https://github.com/DogCatPuppyLover/typewriter/issues</a></p>", "<p>Thank you for using Typewriter! <3</p>", "<p>Never gonna give you up</p><p>Never gonna let you down</p><p>Never gonna run around and desert you</p><p>Never gonna make you cry</p><p>Never gonna say goodbye</p><p>Never gonna tell a lie and hurt you</p>", "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", "<p>I have no memory of this place. Uh Were-worms beings starlight stink laddie watchtower outlast. Maids moon separate interrupt pleased asleep forebears forfeit cat draught o'clock Girion. Riding lands Bilbo Baggins concealment arm unwise. Others fulfilled Rohirrim? Absolutely won't antagonize delved wizard Dwarf-city despair riddles ill-favored beacon. Grond nonsense deny. Let's break paths mustn't yearns cry baby tall hundreds head-on Saruman's scent. Emerald beg limited Balrog improve hunted. (Generated with <a href=\"https://lotremipsum.com/result-basic.php\">LOTRem Ipsum</a>)</p>"];
   var checkboxPreferences = [];
   var radioPreferences = [];
   var textareas = [];
@@ -158,13 +158,13 @@
     var fileName = prompt("Enter filename:", "typewriter-file" + (file + 1) + ".html");
     if (fileName !== null) {
       let splitFileName = fileName.split(".");
-      switch (splitFileName[splitFileName.length]) {
+      switch (splitFileName[splitFileName.length - 1]) {
         case "html":
           exportFile(fileName, editor.innerHTML, "text/html");
           break;
 
         case "txt":
-          exportFile(fileName, editor.innerText, "text/plain"); // use better HTML-to-text method that preserves lists
+          exportFile(fileName, editor.innerText, "text/plain"); // Use better HTML-to-text method that preserves lists
           break;
 
         case "md":
